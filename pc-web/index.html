@@ -1,0 +1,2370 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>白马有机果蔬农场 | White Horse Organic Farm</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Sans+Khmer:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- ECharts -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'farm-green': '#0F1A13',
+        'farm-green-light': '#1a2e1f',
+        'farm-green-lighter': '#243d2b',
+        'champagne': '#C5A880',
+        'champagne-light': '#D4B88E',
+        'champagne-dark': '#A68A60',
+        'mint': '#A8C5A8',
+        'mint-light': '#C5DCC5',
+        'mint-dark': '#7FA87F',
+        'warm-bg': '#F5F0E8',
+        'warm-card': '#FDFBF7',
+      },
+      fontFamily: {
+        'sans': ['Noto Sans SC', 'Noto Sans Khmer', 'system-ui', 'sans-serif'],
+        'serif': ['Playfair Display', 'serif'],
+      }
+    }
+  }
+}
+</script>
+
+<style>
+/* ===== CSS 变量 ===== */
+:root {
+  --farm-green: #0F1A13;
+  --farm-green-light: #1a2e1f;
+  --farm-green-lighter: #243d2b;
+  --champagne: #C5A880;
+  --champagne-light: #D4B88E;
+  --champagne-dark: #A68A60;
+  --mint: #A8C5A8;
+  --mint-light: #C5DCC5;
+  --mint-dark: #7FA87F;
+  --warm-bg: #F5F0E8;
+  --warm-card: #FDFBF7;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 2px 8px rgba(15,26,19,0.06);
+  --shadow: 0 4px 20px rgba(15,26,19,0.10);
+  --shadow-lg: 0 8px 32px rgba(15,26,19,0.15);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== 全局样式 ===== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', 'Noto Sans Khmer', system-ui, sans-serif;
+  background: var(--warm-bg);
+  color: var(--farm-green);
+  overflow-x: hidden;
+}
+
+/* ===== 滚动条美化 ===== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--warm-bg); }
+::-webkit-scrollbar-thumb { background: var(--mint); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--mint-dark); }
+
+/* ===== 导航栏 ===== */
+.nav-fixed {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(15,26,19,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(197,168,128,0.15);
+  transition: var(--transition);
+}
+.nav-link {
+  position: relative; padding: 8px 0;
+  color: rgba(255,255,255,0.7); font-size: 14px;
+  transition: var(--transition); cursor: pointer;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--champagne);
+}
+.nav-link::after {
+  content: ''; position: absolute; bottom: 0; left: 50%; right: 50%;
+  height: 2px; background: var(--champagne);
+  transition: var(--transition);
+}
+.nav-link:hover::after, .nav-link.active::after { left: 0; right: 0; }
+
+/* ===== 搜索框 ===== */
+.search-box {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(197,168,128,0.2);
+  border-radius: 24px;
+  transition: var(--transition);
+}
+.search-box:focus-within {
+  border-color: var(--champagne);
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 0 0 3px rgba(197,168,128,0.15);
+}
+
+/* ===== Hero区域 ===== */
+.hero-section {
+  min-height: 680px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(168,197,168,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(197,168,128,0.12) 0%, transparent 50%),
+    linear-gradient(135deg, #0F1A13 0%, #1a2e1f 40%, #2d3b25 70%, #1a2e1f 100%);
+  position: relative; overflow: hidden;
+}
+.hero-section::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C5A880' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+/* ===== 产品卡片 ===== */
+.product-card {
+  background: var(--warm-card);
+  border-radius: var(--radius);
+  border: 1px solid rgba(15,26,19,0.06);
+  transition: var(--transition);
+  overflow: hidden;
+  position: relative;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(197,168,128,0.3);
+}
+.product-card .quick-view {
+  position: absolute; inset: 0; background: rgba(15,26,19,0.85);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: var(--transition); pointer-events: none;
+}
+.product-card:hover .quick-view { opacity: 1; pointer-events: auto; }
+
+/* ===== 标签 ===== */
+.tag-og {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+  color: #fff; font-size: 11px; font-weight: 600;
+  padding: 3px 10px; border-radius: 20px;
+}
+.tag-highlight {
+  display: inline-flex; align-items: center; gap: 3px;
+  background: rgba(197,168,128,0.12); color: var(--champagne-dark);
+  font-size: 11px; padding: 2px 8px; border-radius: 10px;
+}
+
+/* ===== 按钮 ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--champagne), var(--champagne-dark));
+  color: #fff; font-weight: 600; padding: 12px 28px;
+  border-radius: 24px; border: none; cursor: pointer;
+  transition: var(--transition); display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(197,168,128,0.4);
+}
+.btn-outline {
+  border: 1.5px solid var(--champagne); color: var(--champagne);
+  background: transparent; font-weight: 600; padding: 10px 24px;
+  border-radius: 24px; cursor: pointer; transition: var(--transition);
+}
+.btn-outline:hover { background: var(--champagne); color: #fff; }
+.btn-green {
+  background: linear-gradient(135deg, var(--mint), var(--mint-dark));
+  color: #fff; font-weight: 600; padding: 12px 28px;
+  border-radius: 24px; border: none; cursor: pointer;
+  transition: var(--transition);
+}
+.btn-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(127,168,127,0.4);
+}
+
+/* ===== 筛选标签 ===== */
+.filter-tab {
+  padding: 8px 20px; border-radius: 20px; border: 1.5px solid transparent;
+  background: transparent; color: var(--farm-green); opacity: 0.6;
+  cursor: pointer; font-size: 14px; font-weight: 500;
+  transition: var(--transition);
+}
+.filter-tab:hover { opacity: 1; background: rgba(197,168,128,0.08); }
+.filter-tab.active {
+  opacity: 1; border-color: var(--farm-green);
+  background: var(--farm-green); color: var(--champagne);
+}
+
+/* ===== 购物车面板 ===== */
+.cart-overlay {
+  position: fixed; inset: 0; background: rgba(15,26,19,0.5);
+  z-index: 2000; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.cart-overlay.open { opacity: 1; pointer-events: auto; }
+.cart-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 480px;
+  max-width: 100vw;
+  background: var(--warm-card); z-index: 2001;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -8px 0 32px rgba(15,26,19,0.15);
+  display: flex; flex-direction: column;
+}
+.cart-panel.open { transform: translateX(0); }
+
+/* ===== 弹窗 ===== */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15,26,19,0.6);
+  z-index: 3000; display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: auto; }
+.modal-content {
+  background: var(--warm-card); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); max-height: 90vh; overflow-y: auto;
+  max-width: 900px; width: 100%;
+  transform: scale(0.95); transition: transform 0.3s;
+}
+.modal-overlay.open .modal-content { transform: scale(1); }
+
+/* ===== 环形进度条 ===== */
+.ring-progress {
+  width: 80px; height: 80px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.ring-progress .ring-inner {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--warm-card); display: flex; align-items: center;
+  justify-content: center; flex-direction: column;
+}
+.ring-progress .ring-label { font-size: 10px; color: #888; }
+.ring-progress .ring-value { font-size: 16px; font-weight: 700; color: var(--farm-green); }
+
+/* ===== 健康标签云 ===== */
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+.health-tag {
+  padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  animation: tagFloat 3s ease-in-out infinite;
+}
+@keyframes tagFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ===== 适合人群图标 ===== */
+.audience-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; transition: var(--transition); cursor: pointer;
+  position: relative;
+}
+.audience-icon:hover { transform: scale(1.12); }
+.audience-tooltip {
+  position: absolute; bottom: calc(100% + 8px); left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: var(--farm-green); color: #fff; font-size: 11px;
+  padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+  transition: var(--transition); pointer-events: none;
+}
+.audience-icon:hover .audience-tooltip { transform: translateX(-50%) scale(1); }
+
+/* ===== 支付方式卡片 ===== */
+.pay-method-card {
+  border: 2px solid rgba(15,26,19,0.08); border-radius: var(--radius);
+  padding: 24px; text-align: center; cursor: pointer; transition: var(--transition);
+  background: #fff;
+}
+.pay-method-card:hover { border-color: var(--champagne); box-shadow: var(--shadow); }
+.pay-method-card.selected {
+  border-color: var(--champagne);
+  background: linear-gradient(135deg, rgba(197,168,128,0.1), rgba(168,197,168,0.1));
+}
+
+/* ===== 页面切换动画 ===== */
+.page-section {
+  display: none;
+  animation: fadeInUp 0.4s ease;
+}
+.page-section.active { display: block; }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== AI推荐卡片 ===== */
+.ai-card {
+  background: linear-gradient(135deg, var(--warm-card), #fff);
+  border-radius: var(--radius); border: 1px solid rgba(168,197,168,0.3);
+  padding: 24px; min-width: 300px;
+  transition: var(--transition);
+}
+.ai-card:hover {
+  transform: translateY(-4px); box-shadow: var(--shadow);
+  border-color: var(--mint);
+}
+
+/* ===== 统计数字动画 ===== */
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px; font-weight: 700; color: var(--champagne);
+  line-height: 1.2;
+}
+
+/* ===== 套餐滚动容器 ===== */
+.scroll-container {
+  display: flex; gap: 20px; overflow-x: auto;
+  padding-bottom: 12px; scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.scroll-container::-webkit-scrollbar { display: none; }
+
+/* ===== 用户中心侧边栏 ===== */
+.uc-sidebar {
+  width: 260px; min-height: calc(100vh - 80px);
+  background: var(--warm-card);
+  border-right: 1px solid rgba(15,26,19,0.06);
+}
+.uc-menu-item {
+  padding: 14px 20px; display: flex; align-items: center; gap: 12px;
+  color: var(--farm-green); opacity: 0.7; cursor: pointer;
+  transition: var(--transition); border-left: 3px solid transparent;
+}
+.uc-menu-item:hover, .uc-menu-item.active {
+  opacity: 1; background: rgba(197,168,128,0.08);
+  border-left-color: var(--champagne); color: var(--farm-green);
+}
+
+/* ===== 数量选择器 ===== */
+.qty-selector {
+  display: flex; align-items: center; gap: 0;
+  border: 1px solid rgba(15,26,19,0.12); border-radius: 8px; overflow: hidden;
+}
+.qty-btn {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  background: rgba(15,26,19,0.04); cursor: pointer; transition: var(--transition);
+  border: none; font-size: 16px;
+}
+.qty-btn:hover { background: var(--champagne); color: #fff; }
+.qty-input {
+  width: 48px; height: 36px; text-align: center; border: none;
+  background: #fff; font-weight: 600; font-size: 14px;
+}
+
+/* ===== 规格选择 ===== */
+.spec-btn {
+  padding: 6px 14px; border-radius: 8px; border: 1.5px solid rgba(15,26,19,0.12);
+  background: #fff; cursor: pointer; font-size: 13px; transition: var(--transition);
+}
+.spec-btn:hover { border-color: var(--champagne); }
+.spec-btn.active {
+  border-color: var(--champagne);
+  background: linear-gradient(135deg, rgba(197,168,128,0.15), rgba(168,197,168,0.15));
+  color: var(--champagne-dark); font-weight: 600;
+}
+
+/* ===== 语言切换 ===== */
+.lang-switch {
+  display: flex; align-items: center; gap: 2px;
+  background: rgba(255,255,255,0.08); border-radius: 6px; padding: 2px;
+}
+.lang-btn {
+  padding: 4px 10px; border-radius: 4px; font-size: 12px;
+  color: rgba(255,255,255,0.5); cursor: pointer; transition: var(--transition);
+  border: none; background: none;
+}
+.lang-btn.active { background: rgba(197,168,128,0.25); color: var(--champagne); font-weight: 600; }
+.lang-btn:hover:not(.active) { color: rgba(255,255,255,0.8); }
+
+/* ===== 烹饪指南卡片 ===== */
+.recipe-card {
+  background: #fff; border-radius: var(--radius);
+  border: 1px solid rgba(15,26,19,0.06); padding: 16px;
+  transition: var(--transition);
+}
+.recipe-card:hover { box-shadow: var(--shadow); border-color: rgba(197,168,128,0.2); }
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(100px);
+  background: var(--farm-green); color: #fff; padding: 14px 28px;
+  border-radius: 12px; box-shadow: var(--shadow-lg); z-index: 5000;
+  font-size: 14px; display: flex; align-items: center; gap: 10px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ===== Footer ===== */
+.footer-section {
+  background: var(--farm-green); color: rgba(255,255,255,0.7);
+}
+.footer-section a { color: rgba(255,255,255,0.5); transition: var(--transition); text-decoration: none; }
+.footer-section a:hover { color: var(--champagne); }
+
+/* ===== 特色卡片 ===== */
+.feature-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(197,168,128,0.15);
+  border-radius: var(--radius); padding: 32px 24px;
+  backdrop-filter: blur(10px); transition: var(--transition);
+}
+.feature-card:hover {
+  border-color: rgba(197,168,128,0.3);
+  transform: translateY(-4px);
+  background: rgba(255,255,255,0.08);
+}
+
+/* ===== 订单卡片 ===== */
+.order-card {
+  background: #fff; border-radius: var(--radius);
+  border: 1px solid rgba(15,26,19,0.06); padding: 24px;
+  margin-bottom: 16px; transition: var(--transition);
+}
+.order-card:hover { box-shadow: var(--shadow); }
+
+/* ===== 响应式适配 ===== */
+@media (max-width: 1024px) {
+  .hero-section { min-height: 500px; }
+  .stat-number { font-size: 32px; }
+}
+
+/* ===== 通用工具 ===== */
+.text-gradient {
+  background: linear-gradient(135deg, var(--champagne), var(--mint));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--champagne), transparent);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 导航栏 ===== -->
+<nav class="nav-fixed" id="navbar">
+  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between" style="height: 72px;">
+    <!-- Logo -->
+    <div class="flex items-center gap-8">
+      <a href="#home" class="flex items-center gap-3" onclick="navigateTo('home')">
+        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-champagne to-champagne-dark flex items-center justify-center">
+          <i class="fas fa-horse text-white text-lg"></i>
+        </div>
+        <div class="text-white">
+          <div class="text-base font-bold leading-tight" data-i18n="brandName">白马有机果蔬农场</div>
+          <div class="text-xs opacity-50 tracking-wider">WHITE HORSE ORGANIC FARM</div>
+        </div>
+      </a>
+      <!-- 导航菜单 -->
+      <div class="hidden lg:flex items-center gap-6 ml-4" id="navMenu">
+        <a href="#home" class="nav-link active" data-i18n="nav_home" onclick="navigateTo('home')">首页</a>
+        <a href="#products" class="nav-link" data-i18n="nav_all" onclick="navigateTo('products')">全部产品</a>
+        <a href="#products" class="nav-link" data-i18n="nav_veg" onclick="navigateTo('products','vegetable')">有机蔬菜</a>
+        <a href="#products" class="nav-link" data-i18n="nav_fruit" onclick="navigateTo('products','fruit')">新鲜水果</a>
+        <a href="#products" class="nav-link" data-i18n="nav_produce" onclick="navigateTo('products','produce')">农产品</a>
+        <a href="#about" class="nav-link" data-i18n="nav_about" onclick="navigateTo('about')">关于我们</a>
+      </div>
+    </div>
+    <!-- 右侧工具 -->
+    <div class="flex items-center gap-4">
+      <!-- 搜索 -->
+      <div class="search-box hidden md:flex items-center px-4" style="width: 220px; height: 40px;">
+        <i class="fas fa-search text-champagne/50 text-sm mr-2"></i>
+        <input type="text" data-i18n-placeholder="searchPlaceholder" placeholder="搜索有机产品..." class="bg-transparent border-none outline-none text-white text-sm w-full" id="searchInput">
+      </div>
+      <!-- 语言切换 -->
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('zh')">中</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('km')" style="font-family:'Noto Sans Khmer';">ខ្មែរ</button>
+      </div>
+      <!-- 购物车 -->
+      <button class="relative text-white/70 hover:text-champagne transition-all" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart text-lg"></i>
+        <span class="absolute -top-1.5 -right-2 bg-gradient-to-r from-red-500 to-red-400 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center" id="cartBadge">0</span>
+      </button>
+      <!-- 用户 -->
+      <button class="text-white/70 hover:text-champagne transition-all" onclick="navigateTo('user')">
+        <i class="fas fa-user-circle text-xl"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ======================== 页面内容区域 ======================== -->
+<main style="padding-top: 72px;">
+
+<!-- ===== 首页 ===== -->
+<section id="page-home" class="page-section active">
+
+  <!-- Hero区域 -->
+  <div class="hero-section flex items-center">
+    <div class="max-w-7xl mx-auto px-6 w-full relative z-10 py-20">
+      <div class="max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6" style="background: rgba(168,197,168,0.15); border: 1px solid rgba(168,197,168,0.25);">
+          <span class="w-2 h-2 rounded-full bg-mint animate-pulse"></span>
+          <span class="text-mint text-sm" data-i18n="heroBadge">柬埔寨第一有机农场</span>
+        </div>
+        <h1 class="text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight" style="font-family:'Playfair Display',serif;" data-i18n="heroTitle">白马有机果蔬农场</h1>
+        <p class="text-lg text-white/60 mb-8 leading-relaxed" data-i18n="heroSubtitle">从农场直达您家 · 100%有机认证 · 每日新鲜采摘</p>
+        <div class="flex items-center gap-4">
+          <button class="btn-primary" onclick="navigateTo('products')">
+            <i class="fas fa-leaf"></i> <span data-i18n="btnShopNow">立即选购</span>
+          </button>
+          <button class="btn-outline" onclick="navigateTo('about')">
+            <span data-i18n="btnLearnMore">了解更多</span>
+          </button>
+        </div>
+      </div>
+      <!-- 特色卡片 -->
+      <div class="grid grid-cols-3 gap-5 mt-14 max-w-3xl">
+        <div class="feature-card text-center">
+          <div class="w-14 h-14 rounded-full bg-mint/15 flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-seedling text-mint text-2xl"></i>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-1" data-i18n="feature1Title">每日新鲜采摘</h3>
+          <p class="text-white/40 text-xs" data-i18n="feature1Desc">清晨采摘，当天配送</p>
+        </div>
+        <div class="feature-card text-center">
+          <div class="w-14 h-14 rounded-full bg-champagne/15 flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-shipping-fast text-champagne text-2xl"></i>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-1" data-i18n="feature2Title">2小时极速配送</h3>
+          <p class="text-white/40 text-xs" data-i18n="feature2Desc">金边市区2小时内送达</p>
+        </div>
+        <div class="feature-card text-center">
+          <div class="w-14 h-14 rounded-full bg-mint/15 flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-certificate text-mint text-2xl"></i>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-1" data-i18n="feature3Title">100%有机认证</h3>
+          <p class="text-white/40 text-xs" data-i18n="feature3Desc">柬埔寨农业部有机认证</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 产品展示 -->
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold mb-3" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="productsTitle">当季热销有机产品</h2>
+      <div class="divider-gold max-w-xs mx-auto mb-8"></div>
+      <!-- 筛选标签 -->
+      <div class="flex items-center justify-center gap-2 flex-wrap" id="productFilter">
+        <button class="filter-tab active" data-filter="all" onclick="filterProducts('all')">
+          <i class="fas fa-th-large mr-1"></i><span data-i18n="filterAll">全部</span>
+        </button>
+        <button class="filter-tab" data-filter="vegetable" onclick="filterProducts('vegetable')">
+          <i class="fas fa-carrot mr-1"></i><span data-i18n="filterVeg">蔬菜</span>
+        </button>
+        <button class="filter-tab" data-filter="fruit" onclick="filterProducts('fruit')">
+          <i class="fas fa-apple-alt mr-1"></i><span data-i18n="filterFruit">水果</span>
+        </button>
+        <button class="filter-tab" data-filter="produce" onclick="filterProducts('produce')">
+          <i class="fas fa-wheat mr-1"></i><span data-i18n="filterProduce">农产品</span>
+        </button>
+      </div>
+    </div>
+    <!-- 产品网格 -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="productGrid">
+      <!-- 由JS动态生成 -->
+    </div>
+  </div>
+
+  <!-- 品牌故事 -->
+  <div class="py-16" style="background: linear-gradient(135deg, rgba(168,197,168,0.08), rgba(197,168,128,0.06));">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-champagne-dark font-semibold text-sm tracking-wider uppercase" data-i18n="storyLabel">品牌故事</span>
+          <h2 class="text-3xl font-bold mt-3 mb-5" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="storyTitle">源自柬埔寨白马有机农场</h2>
+          <p class="leading-relaxed mb-4 opacity-75" data-i18n="storyDesc1">白马有机农场位于柬埔寨风景秀丽的白马省，拥有得天独厚的自然环境。我们的农场坚持传统农耕智慧与现代有机技术相结合，不使用任何化学农药和人工肥料，让每一颗蔬菜、每一个水果都在最自然的环境中生长。</p>
+          <p class="leading-relaxed mb-8 opacity-75" data-i18n="storyDesc2">从播种到收获，从采摘到配送，我们全程严格把控每一个环节，只为将最新鲜、最健康的有机食材送到您的餐桌。我们相信，好的食物源于对土地的尊重和对自然的敬畏。</p>
+          <!-- 统计数据 -->
+          <div class="grid grid-cols-4 gap-4">
+            <div class="text-center">
+              <div class="stat-number" data-count="12">0</div>
+              <div class="text-xs opacity-60 mt-1" data-i18n="stat1">种有机产品</div>
+            </div>
+            <div class="text-center">
+              <div class="stat-number" data-count="2000">0</div>
+              <div class="text-xs opacity-60 mt-1" data-i18n="stat2">满意客户</div>
+            </div>
+            <div class="text-center">
+              <div class="stat-number" data-count="15">0</div>
+              <div class="text-xs opacity-60 mt-1" data-i18n="stat3">公里配送范围</div>
+            </div>
+            <div class="text-center">
+              <div class="stat-number" data-count="98">0</div>
+              <div class="text-xs opacity-60 mt-1" data-i18n="stat4">好评率</div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="rounded-2xl overflow-hidden shadow-lg" style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--farm-green-light), var(--mint-dark)); display: flex; align-items: center; justify-content: center;">
+            <div class="text-center">
+              <div class="text-8xl mb-4"><i class="fas fa-horse text-champagne/30" style="font-size: 120px;"></i></div>
+              <div class="text-white/60 text-sm" data-i18n="farmImageLabel">白马有机农场实景</div>
+            </div>
+          </div>
+          <div class="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-lg p-4 flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full bg-mint/20 flex items-center justify-center">
+              <i class="fas fa-award text-mint-dark text-xl"></i>
+            </div>
+            <div>
+              <div class="text-sm font-semibold" style="color: var(--farm-green);" data-i18n="certLabel">有机认证农场</div>
+              <div class="text-xs opacity-50">Certified Organic Farm</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI营养师推荐 -->
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <span class="text-champagne-dark font-semibold text-sm tracking-wider uppercase" data-i18n="aiLabel">AI 智能推荐</span>
+        <h2 class="text-3xl font-bold mt-2" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="aiTitle">AI智能营养推荐</h2>
+      </div>
+      <div class="flex items-center gap-2">
+        <button class="w-9 h-9 rounded-full border border-farm-green/15 flex items-center justify-center hover:bg-farm-green hover:text-white transition-all" onclick="scrollAi('left')">
+          <i class="fas fa-chevron-left text-xs"></i>
+        </button>
+        <button class="w-9 h-9 rounded-full border border-farm-green/15 flex items-center justify-center hover:bg-farm-green hover:text-white transition-all" onclick="scrollAi('right')">
+          <i class="fas fa-chevron-right text-xs"></i>
+        </button>
+      </div>
+    </div>
+    <div class="scroll-container" id="aiPackageScroll">
+      <!-- 由JS动态生成 -->
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== 全部产品页 ===== -->
+<section id="page-products" class="page-section">
+  <div class="py-12" style="background: linear-gradient(135deg, var(--farm-green), var(--farm-green-light));">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-3xl font-bold text-white mb-2" style="font-family:'Playfair Display',serif;" data-i18n="allProductsTitle">全部有机产品</h1>
+      <p class="text-white/50" data-i18n="allProductsSubtitle">精选白马农场每日新鲜有机果蔬</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <!-- 筛选标签 -->
+    <div class="flex items-center gap-2 flex-wrap mb-8" id="productFilter2">
+      <button class="filter-tab active" data-filter="all" onclick="filterProducts('all')">
+        <i class="fas fa-th-large mr-1"></i><span data-i18n="filterAll">全部</span>
+      </button>
+      <button class="filter-tab" data-filter="vegetable" onclick="filterProducts('vegetable')">
+        <i class="fas fa-carrot mr-1"></i><span data-i18n="filterVeg">蔬菜</span>
+      </button>
+      <button class="filter-tab" data-filter="fruit" onclick="filterProducts('fruit')">
+        <i class="fas fa-apple-alt mr-1"></i><span data-i18n="filterFruit">水果</span>
+      </button>
+      <button class="filter-tab" data-filter="produce" onclick="filterProducts('produce')">
+        <i class="fas fa-wheat mr-1"></i><span data-i18n="filterProduce">农产品</span>
+      </button>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5" id="productGrid2"></div>
+  </div>
+</section>
+
+<!-- ===== 关于我们页 ===== -->
+<section id="page-about" class="page-section">
+  <div class="py-12" style="background: linear-gradient(135deg, var(--farm-green), var(--farm-green-light));">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-3xl font-bold text-white mb-2" style="font-family:'Playfair Display',serif;" data-i18n="aboutTitle">关于我们</h1>
+      <p class="text-white/50" data-i18n="aboutSubtitle">白马有机果蔬农场的故事</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <!-- 品牌故事 -->
+    <div class="mb-16">
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <span class="text-champagne-dark font-semibold text-sm" data-i18n="storySectionLabel">品牌故事</span>
+          <h2 class="text-2xl font-bold mt-2 mb-4" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="brandStoryTitle">从一片土地到千家万户</h2>
+          <p class="leading-relaxed mb-4 opacity-75" data-i18n="brandStory1">白马有机农场创立于2018年，坐落于柬埔寨白马省风景如画的丘陵地带。这里阳光充足、雨水丰沛、土壤肥沃，是大自然赐予的绝佳农耕之地。</p>
+          <p class="leading-relaxed mb-4 opacity-75" data-i18n="brandStory2">我们秉承"尊重自然、回归本源"的理念，坚持不使用任何化学合成农药、化肥、生长调节剂。通过有机堆肥、生物防治、轮作休耕等传统农耕智慧，让土地保持最自然的状态。</p>
+          <p class="leading-relaxed opacity-75" data-i18n="brandStory3">经过六年的发展，白马农场已从最初的小规模种植，成长为拥有12种有机产品、服务2000+家庭的大型有机农场，是柬埔寨有机农业的标杆企业。</p>
+        </div>
+        <div class="rounded-2xl overflow-hidden shadow-lg" style="aspect-ratio: 4/3; background: linear-gradient(135deg, var(--farm-green-lighter), var(--mint-dark)); display: flex; align-items: center; justify-content: center;">
+          <div class="text-center">
+            <i class="fas fa-tractor text-champagne/25" style="font-size: 100px;"></i>
+            <div class="text-white/50 text-sm mt-4" data-i18n="farmLabel">白马有机农场</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 有机认证 -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-bold mb-6" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="certTitle">有机认证</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl p-6 border border-black/5 text-center">
+          <div class="w-16 h-16 rounded-full bg-mint/15 flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-shield-alt text-mint-dark text-2xl"></i>
+          </div>
+          <h3 class="font-semibold mb-1" data-i18n="cert1Title">柬埔寨农业部认证</h3>
+          <p class="text-sm opacity-50" data-i18n="cert1Desc">获得柬埔寨农业部有机产品认证，符合国际有机农业标准。</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-black/5 text-center">
+          <div class="w-16 h-16 rounded-full bg-champagne/15 flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-leaf text-champagne-dark text-2xl"></i>
+          </div>
+          <h3 class="font-semibold mb-1" data-i18n="cert2Title">无公害种植</h3>
+          <p class="text-sm opacity-50" data-i18n="cert2Desc">100%不使用化学农药和人工肥料，全程天然种植。</p>
+        </div>
+        <div class="bg-white rounded-xl p-6 border border-black/5 text-center">
+          <div class="w-16 h-16 rounded-full bg-mint/15 flex items-center justify-center mx-auto mb-3">
+            <i class="fas fa-hand-holding-heart text-mint-dark text-2xl"></i>
+          </div>
+          <h3 class="font-semibold mb-1" data-i18n="cert3Title">可追溯系统</h3>
+          <p class="text-sm opacity-50" data-i18n="cert3Desc">每批次产品均可追溯至种植地块，确保食品安全透明。</p>
+        </div>
+      </div>
+    </div>
+    <!-- 联系方式 -->
+    <div class="mb-16">
+      <h2 class="text-2xl font-bold mb-6" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="contactTitle">联系我们</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-white rounded-xl p-5 border border-black/5">
+          <i class="fas fa-map-marker-alt text-champagne mb-2"></i>
+          <div class="text-sm font-semibold mb-1" data-i18n="addressLabel">农场地址</div>
+          <div class="text-sm opacity-50" data-i18n="addressValue">柬埔寨白马省白马市</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-black/5">
+          <i class="fas fa-phone text-champagne mb-2"></i>
+          <div class="text-sm font-semibold mb-1" data-i18n="phoneLabel">联系电话</div>
+          <div class="text-sm opacity-50">+855 12 345 678</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-black/5">
+          <i class="fas fa-envelope text-champagne mb-2"></i>
+          <div class="text-sm font-semibold mb-1" data-i18n="emailLabel">电子邮箱</div>
+          <div class="text-sm opacity-50">info@whitehorse.farm</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-black/5">
+          <i class="fas fa-clock text-champagne mb-2"></i>
+          <div class="text-sm font-semibold mb-1" data-i18n="hoursLabel">营业时间</div>
+          <div class="text-sm opacity-50" data-i18n="hoursValue">周一至周日 6:00-20:00</div>
+        </div>
+      </div>
+    </div>
+    <!-- 配送范围 -->
+    <div>
+      <h2 class="text-2xl font-bold mb-6" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="deliveryTitle">配送范围</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="deliveryMap">
+        <div class="bg-white rounded-xl p-5 border border-black/5 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">🏙️</div>
+          <div class="font-semibold text-sm" data-i18n="city1">金边</div>
+          <div class="text-xs opacity-50">Phnom Penh</div>
+          <div class="text-xs text-mint-dark mt-1" data-i18n="cityDelivery">2小时达</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-black/5 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">🌊</div>
+          <div class="font-semibold text-sm" data-i18n="city2">西哈努克港</div>
+          <div class="text-xs opacity-50">Sihanoukville</div>
+          <div class="text-xs text-mint-dark mt-1" data-i18n="cityDelivery2">当日达</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-black/5 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">🏛️</div>
+          <div class="font-semibold text-sm" data-i18n="city3">暹粒</div>
+          <div class="text-xs opacity-50">Siem Reap</div>
+          <div class="text-xs text-champagne-dark mt-1" data-i18n="cityDelivery3">次日达</div>
+        </div>
+        <div class="bg-white rounded-xl p-5 border border-black/5 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl mb-2">🌾</div>
+          <div class="font-semibold text-sm" data-i18n="city4">马德望</div>
+          <div class="text-xs opacity-50">Battambang</div>
+          <div class="text-xs text-champagne-dark mt-1" data-i18n="cityDelivery3">次日达</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 结算页 ===== -->
+<section id="page-checkout" class="page-section">
+  <div class="py-12" style="background: linear-gradient(135deg, var(--farm-green), var(--farm-green-light));">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-3xl font-bold text-white mb-2" style="font-family:'Playfair Display',serif;" data-i18n="checkoutTitle">确认订单</h1>
+      <p class="text-white/50" data-i18n="checkoutSubtitle">填写收货信息，完成下单</p>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 py-10">
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- 左侧表单 -->
+      <div class="lg:col-span-2">
+        <!-- 收货地址 -->
+        <div class="bg-white rounded-xl p-6 border border-black/5 mb-6">
+          <h3 class="font-semibold mb-4 flex items-center gap-2" style="color: var(--farm-green);">
+            <i class="fas fa-map-marker-alt text-champagne"></i> <span data-i18n="shippingTitle">收货地址</span>
+          </h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelName">姓名</label>
+              <input type="text" class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none transition-colors" id="coName" data-i18n-placeholder="placeholderName" placeholder="请输入收货人姓名">
+            </div>
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelPhone">手机号码</label>
+              <input type="text" class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none transition-colors" id="coPhone" data-i18n-placeholder="placeholderPhone" placeholder="+855 XX XXX XXXX">
+            </div>
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelCity">城市</label>
+              <select class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none transition-colors bg-white" id="coCity">
+                <option value="phnom_penh" data-i18n="cityPhnomPenh">金边 Phnom Penh</option>
+                <option value="sihanoukville" data-i18n="citySihanoukville">西哈努克港 Sihanoukville</option>
+                <option value="siem_reap" data-i18n="citySiemReap">暹粒 Siem Reap</option>
+                <option value="battambang" data-i18n="cityBattambang">马德望 Battambang</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelAddress">详细地址</label>
+              <textarea class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none transition-colors resize-none" rows="2" id="coAddress" data-i18n-placeholder="placeholderAddress" placeholder="请输入街道、门牌号等详细信息"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- 订单商品 -->
+        <div class="bg-white rounded-xl p-6 border border-black/5 mb-6">
+          <h3 class="font-semibold mb-4 flex items-center gap-2" style="color: var(--farm-green);">
+            <i class="fas fa-shopping-bag text-champagne"></i> <span data-i18n="orderItems">订单商品</span>
+          </h3>
+          <div id="checkoutItems" class="space-y-3">
+            <!-- JS动态生成 -->
+          </div>
+        </div>
+        <!-- 优惠券 -->
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4 flex items-center gap-2" style="color: var(--farm-green);">
+            <i class="fas fa-ticket-alt text-champagne"></i> <span data-i18n="couponTitle">优惠券</span>
+          </h3>
+          <div class="flex gap-3">
+            <select class="flex-1 border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none bg-white" id="couponSelect" onchange="applyCoupon()">
+              <option value="" data-i18n="noCoupon">不使用优惠券</option>
+              <option value="NEW10">NEW10 - 新客9折</option>
+              <option value="SAVE5">SAVE5 - 立减$5</option>
+              <option value="VIP15">VIP15 - VIP85折</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- 右侧金额 -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl p-6 border border-black/5 sticky" style="top: 90px;">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="orderSummary">订单金额</h3>
+          <div class="space-y-3 mb-4">
+            <div class="flex justify-between text-sm">
+              <span class="opacity-60" data-i18n="subtotal">商品小计</span>
+              <span class="font-semibold" id="coSubtotal">$0.00</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="opacity-60" data-i18n="shipping">运费</span>
+              <span class="font-semibold" id="coShipping">$0.00</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="opacity-60" data-i18n="discount">优惠</span>
+              <span class="font-semibold text-red-500" id="coDiscount">-$0.00</span>
+            </div>
+            <div class="divider-gold"></div>
+            <div class="flex justify-between">
+              <span class="font-semibold" data-i18n="total">应付总额</span>
+              <span class="text-xl font-bold text-champagne-dark" id="coTotal">$0.00</span>
+            </div>
+          </div>
+          <button class="btn-primary w-full justify-center" onclick="goToPayment()" id="checkoutBtn">
+            <span data-i18n="confirmOrder">确认下单</span>
+          </button>
+          <p class="text-xs text-center opacity-40 mt-3" data-i18n="freeShippingNote">满$30免运费</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 支付方式页 ===== -->
+<section id="page-payment" class="page-section">
+  <div class="py-12" style="background: linear-gradient(135deg, var(--farm-green), var(--farm-green-light));">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-3xl font-bold text-white mb-2" style="font-family:'Playfair Display',serif;" data-i18n="paymentTitle">选择支付方式</h1>
+      <p class="text-white/50" data-i18n="paymentSubtitle">选择您偏好的支付方式完成订单</p>
+    </div>
+  </div>
+  <div class="max-w-3xl mx-auto px-6 py-10">
+    <div class="text-center mb-6">
+      <span class="text-sm opacity-60" data-i18n="amountToPay">应付金额</span>
+      <div class="text-3xl font-bold text-champagne-dark mt-1" id="paymentAmount">$0.00</div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8" id="paymentMethods">
+      <div class="pay-method-card" data-method="cash" onclick="selectPayment('cash')">
+        <i class="fas fa-money-bill-wave text-3xl text-mint-dark mb-2"></i>
+        <div class="font-semibold text-sm" data-i18n="payCash">现金支付</div>
+        <div class="text-xs opacity-50" data-i18n="payCashDesc">货到付款</div>
+      </div>
+      <div class="pay-method-card" data-method="aba" onclick="selectPayment('aba')">
+        <i class="fas fa-university text-3xl text-champagne-dark mb-2"></i>
+        <div class="font-semibold text-sm" data-i18n="payABA">ABA银行</div>
+        <div class="text-xs opacity-50" data-i18n="payABADesc">银行转账</div>
+      </div>
+      <div class="pay-method-card" data-method="wing" onclick="selectPayment('wing')">
+        <i class="fas fa-mobile-alt text-3xl text-mint-dark mb-2"></i>
+        <div class="font-semibold text-sm" data-i18n="payWing">Wing</div>
+        <div class="text-xs opacity-50" data-i18n="payWingDesc">移动支付</div>
+      </div>
+      <div class="pay-method-card" data-method="acleda" onclick="selectPayment('acleda')">
+        <i class="fas fa-landmark text-3xl text-champagne-dark mb-2"></i>
+        <div class="font-semibold text-sm" data-i18n="payACLEDA">ACLEDA</div>
+        <div class="text-xs opacity-50" data-i18n="payACLEDADesc">银行转账</div>
+      </div>
+      <div class="pay-method-card" data-method="card" onclick="selectPayment('card')">
+        <i class="fas fa-credit-card text-3xl text-mint-dark mb-2"></i>
+        <div class="font-semibold text-sm" data-i18n="payCard">信用卡</div>
+        <div class="text-xs opacity-50">Visa / Master</div>
+      </div>
+      <div class="pay-method-card" data-method="alipay" onclick="selectPayment('alipay')">
+        <i class="fab fa-alipay text-3xl text-blue-500 mb-2"></i>
+        <div class="font-semibold text-sm" data-i18n="payAlipay">支付宝</div>
+        <div class="text-xs opacity-50">扫码支付</div>
+      </div>
+    </div>
+    <button class="btn-primary w-full justify-center" onclick="confirmPayment()" id="confirmPayBtn" disabled>
+      <span data-i18n="confirmPayment">确认支付</span>
+    </button>
+  </div>
+</section>
+
+<!-- ===== 用户中心页 ===== -->
+<section id="page-user" class="page-section">
+  <div class="py-12" style="background: linear-gradient(135deg, var(--farm-green), var(--farm-green-light));">
+    <div class="max-w-7xl mx-auto px-6 flex items-center gap-4">
+      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-champagne to-champagne-dark flex items-center justify-center text-2xl">
+        <i class="fas fa-user text-white"></i>
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold text-white" data-i18n="userCenterTitle">用户中心</h1>
+        <p class="text-white/50 text-sm">user@example.com</p>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 py-8 flex gap-6">
+    <!-- 侧边栏 -->
+    <aside class="uc-sidebar rounded-xl py-4 hidden lg:block">
+      <div class="px-4 mb-2 text-xs font-semibold opacity-40 uppercase tracking-wider" data-i18n="menuTitle">菜单</div>
+      <div class="uc-menu-item active" onclick="switchUserTab('profile')">
+        <i class="fas fa-user w-5 text-center"></i> <span data-i18n="menuProfile">个人资料</span>
+      </div>
+      <div class="uc-menu-item" onclick="switchUserTab('orders')">
+        <i class="fas fa-shopping-bag w-5 text-center"></i> <span data-i18n="menuOrders">我的订单</span>
+      </div>
+      <div class="uc-menu-item" onclick="switchUserTab('address')">
+        <i class="fas fa-map-marker-alt w-5 text-center"></i> <span data-i18n="menuAddress">收货地址</span>
+      </div>
+      <div class="uc-menu-item" onclick="switchUserTab('favorites')">
+        <i class="fas fa-heart w-5 text-center"></i> <span data-i18n="menuFavorites">我的收藏</span>
+      </div>
+      <div class="uc-menu-item" onclick="switchUserTab('coupons')">
+        <i class="fas fa-ticket-alt w-5 text-center"></i> <span data-i18n="menuCoupons">优惠券</span>
+      </div>
+      <div class="uc-menu-item" onclick="switchUserTab('help')">
+        <i class="fas fa-question-circle w-5 text-center"></i> <span data-i18n="menuHelp">帮助中心</span>
+      </div>
+    </aside>
+    <!-- 主内容 -->
+    <div class="flex-1" id="userContent">
+      <!-- 个人资料 -->
+      <div id="uc-profile" class="uc-tab">
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="profileTitle">个人资料</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelNickname">昵称</label>
+              <input type="text" class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none" value="有机生活家">
+            </div>
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelEmail">邮箱</label>
+              <input type="text" class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none" value="user@example.com">
+            </div>
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelPhone">手机</label>
+              <input type="text" class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none" value="+855 12 345 678">
+            </div>
+            <div>
+              <label class="block text-sm opacity-70 mb-1" data-i18n="labelGender">性别</label>
+              <select class="w-full border border-black/10 rounded-lg px-4 py-2.5 text-sm focus:border-champagne focus:outline-none bg-white">
+                <option>男</option><option>女</option><option>保密</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-primary mt-6" onclick="showToast('保存成功')">
+            <i class="fas fa-save"></i> <span data-i18n="btnSave">保存修改</span>
+          </button>
+        </div>
+      </div>
+      <!-- 我的订单 -->
+      <div id="uc-orders" class="uc-tab" style="display:none;">
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="ordersTitle">我的订单</h3>
+          <div id="ordersList" class="space-y-4">
+            <!-- JS动态生成 -->
+          </div>
+        </div>
+      </div>
+      <!-- 收货地址 -->
+      <div id="uc-address" class="uc-tab" style="display:none;">
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="addressTitle">收货地址</h3>
+          <div class="border border-black/8 rounded-lg p-4 mb-3">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-semibold text-sm">张三 <span class="opacity-50 ml-2">+855 12 345 678</span></div>
+                <div class="text-sm opacity-60 mt-1">柬埔寨金边市桑园区俄罗斯大道123号</div>
+              </div>
+              <span class="px-2 py-1 rounded text-xs font-semibold" style="background: rgba(168,197,168,0.15); color: var(--mint-dark);" data-i18n="defaultLabel">默认</span>
+            </div>
+          </div>
+          <button class="btn-outline text-sm">
+            <i class="fas fa-plus"></i> <span data-i18n="btnAddAddress">添加新地址</span>
+          </button>
+        </div>
+      </div>
+      <!-- 我的收藏 -->
+      <div id="uc-favorites" class="uc-tab" style="display:none;">
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="favoritesTitle">我的收藏</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="favoritesGrid">
+            <!-- JS动态生成 -->
+          </div>
+        </div>
+      </div>
+      <!-- 优惠券 -->
+      <div id="uc-coupons" class="uc-tab" style="display:none;">
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="couponsTitle">我的优惠券</h3>
+          <div class="space-y-3" id="couponsList">
+            <div class="flex items-center gap-4 border border-dashed border-champagne/40 rounded-lg p-4" style="background: linear-gradient(135deg, rgba(197,168,128,0.06), rgba(168,197,168,0.06));">
+              <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-champagne to-champagne-dark flex items-center justify-center text-white font-bold text-lg">9折</div>
+              <div class="flex-1">
+                <div class="font-semibold text-sm">NEW10 - 新客9折</div>
+                <div class="text-xs opacity-50">满$10可用 | 有效期至2026-12-31</div>
+              </div>
+              <button class="btn-primary text-xs py-2 px-4" onclick="showToast('已使用优惠券')">使用</button>
+            </div>
+            <div class="flex items-center gap-4 border border-dashed border-champagne/40 rounded-lg p-4" style="background: linear-gradient(135deg, rgba(197,168,128,0.06), rgba(168,197,168,0.06));">
+              <div class="w-16 h-16 rounded-lg bg-gradient-to-br from-mint to-mint-dark flex items-center justify-center text-white font-bold text-lg">-$5</div>
+              <div class="flex-1">
+                <div class="font-semibold text-sm">SAVE5 - 立减$5</div>
+                <div class="text-xs opacity-50">满$25可用 | 有效期至2026-12-31</div>
+              </div>
+              <button class="btn-primary text-xs py-2 px-4" onclick="showToast('已使用优惠券')">使用</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 帮助中心 -->
+      <div id="uc-help" class="uc-tab" style="display:none;">
+        <div class="bg-white rounded-xl p-6 border border-black/5">
+          <h3 class="font-semibold mb-4" style="color: var(--farm-green);" data-i18n="helpTitle">帮助中心</h3>
+          <div class="space-y-3">
+            <details class="border border-black/5 rounded-lg p-4">
+              <summary class="font-semibold text-sm cursor-pointer" data-i18n="faq1Q">如何下单购买？</summary>
+              <p class="text-sm opacity-60 mt-2" data-i18n="faq1A">浏览产品页面，选择您喜欢的有机产品，点击"加入购物车"，然后进入购物车点击"去结算"，填写收货信息并选择支付方式即可完成下单。</p>
+            </details>
+            <details class="border border-black/5 rounded-lg p-4">
+              <summary class="font-semibold text-sm cursor-pointer" data-i18n="faq2Q">配送范围和运费？</summary>
+              <p class="text-sm opacity-60 mt-2" data-i18n="faq2A">我们目前配送金边、西港、暹粒和马德望四个城市。金边市区2小时内送达，满$30免运费，不满$30收取$2运费。</p>
+            </details>
+            <details class="border border-black/5 rounded-lg p-4">
+              <summary class="font-semibold text-sm cursor-pointer" data-i18n="faq3Q">如何确认产品是有机的？</summary>
+              <p class="text-sm opacity-60 mt-2" data-i18n="faq3A">所有产品均获得柬埔寨农业部有机认证，包装上有有机认证标志。我们建立了完整的可追溯系统，您可以追踪每批次产品的种植信息。</p>
+            </details>
+            <details class="border border-black/5 rounded-lg p-4">
+              <summary class="font-semibold text-sm cursor-pointer" data-i18n="faq4Q">支持哪些支付方式？</summary>
+              <p class="text-sm opacity-60 mt-2" data-i18n="faq4A">我们支持现金货到付款、ABA银行转账、Wing移动支付、ACLEDA银行、Visa/Master信用卡、支付宝和微信支付。</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 订单成功页 ===== -->
+<section id="page-success" class="page-section">
+  <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+    <div class="w-20 h-20 rounded-full bg-gradient-to-br from-mint to-mint-dark flex items-center justify-center mx-auto mb-6">
+      <i class="fas fa-check text-white text-3xl"></i>
+    </div>
+    <h1 class="text-3xl font-bold mb-3" style="color: var(--farm-green); font-family:'Playfair Display',serif;" data-i18n="orderSuccessTitle">订单提交成功</h1>
+    <p class="opacity-60 mb-2" data-i18n="orderSuccessDesc">感谢您的订购，我们会尽快为您配送</p>
+    <p class="text-sm opacity-40 mb-8">订单号：<span id="successOrderNo" class="font-mono">#ORD-20260101-001</span></p>
+    <div class="flex items-center justify-center gap-4">
+      <button class="btn-primary" onclick="navigateTo('home')">
+        <i class="fas fa-home"></i> <span data-i18n="btnBackHome">返回首页</span>
+      </button>
+      <button class="btn-outline" onclick="navigateTo('user')">
+        <span data-i18n="btnViewOrders">查看订单</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ======================== 公共组件 ======================== -->
+
+<!-- Footer -->
+<footer class="footer-section pt-16 pb-6">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-9 h-9 rounded-full bg-gradient-to-br from-champagne to-champagne-dark flex items-center justify-center">
+            <i class="fas fa-horse text-white text-sm"></i>
+          </div>
+          <span class="text-white font-bold">白马有机果蔬农场</span>
+        </div>
+        <p class="text-sm leading-relaxed" data-i18n="footerDesc">白马有机农场致力于为您提供最新鲜、最健康的有机果蔬。从农场直达您家，让每一餐都充满自然的味道。</p>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4" data-i18n="footerHelp">帮助中心</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" onclick="navigateTo('user');switchUserTab('help');return false;" data-i18n="footerFAQ">常见问题</a></li>
+          <li><a href="#" data-i18n="footerShipping">配送说明</a></li>
+          <li><a href="#" data-i18n="footerReturn">退换政策</a></li>
+          <li><a href="#" data-i18n="footerPrivacy">隐私政策</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4" data-i18n="footerContact">联系方式</h4>
+        <ul class="space-y-2 text-sm">
+          <li><i class="fas fa-map-marker-alt w-5 text-champagne/50"></i> <span data-i18n="footerAddress">柬埔寨白马省白马市</span></li>
+          <li><i class="fas fa-phone w-5 text-champagne/50"></i> +855 12 345 678</li>
+          <li><i class="fas fa-envelope w-5 text-champagne/50"></i> info@whitehorse.farm</li>
+          <li><i class="fas fa-clock w-5 text-champagne/50"></i> <span data-i18n="footerHours">6:00 - 20:00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-white font-semibold mb-4" data-i18n="footerFollow">关注我们</h4>
+        <div class="flex gap-3">
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-champagne/25 transition-colors"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-champagne/25 transition-colors"><i class="fab fa-telegram"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-champagne/25 transition-colors"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-champagne/25 transition-colors"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <!-- 支付方式 -->
+    <div class="border-t border-white/10 pt-6 mb-6">
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <span class="text-xs opacity-40" data-i18n="footerPayment">支付方式</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs">ABA</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs">Wing</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs">ACLEDA</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs"><i class="fab fa-cc-visa mr-1"></i>Visa</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs"><i class="fab fa-cc-mastercard mr-1"></i>Master</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs"><i class="fab fa-alipay mr-1 text-blue-400"></i>支付宝</span>
+        <span class="px-3 py-1 rounded bg-white/5 text-xs"><i class="fab fa-weixin mr-1 text-green-400"></i>微信支付</span>
+      </div>
+    </div>
+    <div class="text-center text-xs opacity-30">
+      &copy; 2026 White Horse Organic Farm. All Rights Reserved.
+    </div>
+  </div>
+</footer>
+
+<!-- 购物车面板 -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="flex items-center justify-between p-5 border-b border-black/5">
+    <h3 class="font-semibold text-lg" style="color: var(--farm-green);">
+      <i class="fas fa-shopping-cart text-champagne mr-2"></i><span data-i18n="cartTitle">购物车</span>
+    </h3>
+    <button class="w-8 h-8 rounded-full hover:bg-black/5 flex items-center justify-center transition-colors" onclick="toggleCart()">
+      <i class="fas fa-times opacity-50"></i>
+    </button>
+  </div>
+  <div class="flex-1 overflow-y-auto p-5" id="cartItems">
+    <!-- JS动态生成 -->
+  </div>
+  <div class="p-5 border-t border-black/5" style="background: var(--warm-bg);">
+    <div class="space-y-2 mb-4 text-sm">
+      <div class="flex justify-between">
+        <span class="opacity-60" data-i18n="cartSubtotal">小计</span>
+        <span class="font-semibold" id="cartSubtotal">$0.00</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="opacity-60" data-i18n="cartShipping">运费</span>
+        <span class="font-semibold" id="cartShipping">$0.00</span>
+      </div>
+      <div class="divider-gold"></div>
+      <div class="flex justify-between">
+        <span class="font-semibold" data-i18n="cartTotal">合计</span>
+        <span class="text-lg font-bold text-champagne-dark" id="cartTotal">$0.00</span>
+      </div>
+    </div>
+    <button class="btn-primary w-full justify-center mb-2" onclick="goCheckout()">
+      <span data-i18n="btnCheckout">去结算</span>
+    </button>
+    <button class="btn-outline w-full justify-center text-sm py-2" onclick="toggleCart()">
+      <span data-i18n="btnContinue">继续购物</span>
+    </button>
+  </div>
+</div>
+
+<!-- 产品详情弹窗 -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content" id="productModalContent">
+    <div class="flex items-center justify-between p-5 border-b border-black/5">
+      <h3 class="font-semibold" style="color: var(--farm-green);" data-i18n="productDetailTitle">产品详情</h3>
+      <button class="w-8 h-8 rounded-full hover:bg-black/5 flex items-center justify-center" onclick="closeProductModal()">
+        <i class="fas fa-times opacity-50"></i>
+      </button>
+    </div>
+    <div class="p-6" id="productModalBody">
+      <!-- JS动态生成 -->
+    </div>
+  </div>
+</div>
+
+<!-- Toast提示 -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle text-mint"></i>
+  <span id="toastText"></span>
+</div>
+
+<script>
+// ===== I18N 字典 =====
+const I18N = {
+  zh: {
+    brandName: "白马有机果蔬农场", nav_home: "首页", nav_all: "全部产品", nav_veg: "有机蔬菜",
+    nav_fruit: "新鲜水果", nav_produce: "农产品", nav_about: "关于我们",
+    searchPlaceholder: "搜索有机产品...",
+    heroBadge: "柬埔寨第一有机农场",
+    heroTitle: "白马有机果蔬农场",
+    heroSubtitle: "从农场直达您家 · 100%有机认证 · 每日新鲜采摘",
+    btnShopNow: "立即选购", btnLearnMore: "了解更多",
+    feature1Title: "每日新鲜采摘", feature1Desc: "清晨采摘，当天配送",
+    feature2Title: "2小时极速配送", feature2Desc: "金边市区2小时内送达",
+    feature3Title: "100%有机认证", feature3Desc: "柬埔寨农业部有机认证",
+    productsTitle: "当季热销有机产品",
+    filterAll: "全部", filterVeg: "蔬菜", filterFruit: "水果", filterProduce: "农产品",
+    addToCart: "加入购物车", quickView: "快速查看",
+    storyLabel: "品牌故事", storyTitle: "源自柬埔寨白马有机农场",
+    storyDesc1: "白马有机农场位于柬埔寨风景秀丽的白马省，拥有得天独厚的自然环境。我们的农场坚持传统农耕智慧与现代有机技术相结合，不使用任何化学农药和人工肥料，让每一颗蔬菜、每一个水果都在最自然的环境中生长。",
+    storyDesc2: "从播种到收获，从采摘到配送，我们全程严格把控每一个环节，只为将最新鲜、最健康的有机食材送到您的餐桌。我们相信，好的食物源于对土地的尊重和对自然的敬畏。",
+    stat1: "种有机产品", stat2: "满意客户", stat3: "公里配送范围", stat4: "好评率",
+    aiLabel: "AI 智能推荐", aiTitle: "AI智能营养推荐",
+    aiSubtitle: "根据您的需求，AI为您推荐最适合的营养搭配",
+    footerDesc: "白马有机农场致力于为您提供最新鲜、最健康的有机果蔬。从农场直达您家，让每一餐都充满自然的味道。",
+    footerHelp: "帮助中心", footerFAQ: "常见问题", footerShipping: "配送说明", footerReturn: "退换政策", footerPrivacy: "隐私政策",
+    footerContact: "联系方式", footerAddress: "柬埔寨白马省白马市",
+    footerHours: "6:00 - 20:00", footerFollow: "关注我们", footerPayment: "支付方式",
+    cartTitle: "购物车", cartSubtotal: "小计", cartShipping: "运费", cartTotal: "合计",
+    btnCheckout: "去结算", btnContinue: "继续购物", emptyCart: "购物车是空的",
+    productDetailTitle: "产品详情", nutritionTitle: "营养成分", benefitsTitle: "健康益处",
+    suitableTitle: "适合人群", recipeTitle: "烹饪指南",
+    btnAddToCart: "加入购物车", btnBuyNow: "立即购买",
+    checkoutTitle: "确认订单", checkoutSubtitle: "填写收货信息，完成下单",
+    shippingTitle: "收货地址", labelName: "姓名", labelPhone: "手机号码", labelCity: "城市",
+    labelAddress: "详细地址", orderItems: "订单商品", couponTitle: "优惠券",
+    subtotal: "商品小计", shipping: "运费", discount: "优惠", total: "应付总额",
+    confirmOrder: "确认下单", freeShippingNote: "满$30免运费",
+    paymentTitle: "选择支付方式", paymentSubtitle: "选择您偏好的支付方式完成订单",
+    amountToPay: "应付金额", confirmPayment: "确认支付",
+    payCash: "现金支付", payCashDesc: "货到付款",
+    payABA: "ABA银行", payABADesc: "银行转账",
+    payWing: "Wing", payWingDesc: "移动支付",
+    payACLEDA: "ACLEDA", payACLEDADesc: "银行转账",
+    payCard: "信用卡", payAlipay: "支付宝",
+    orderSuccessTitle: "订单提交成功", orderSuccessDesc: "感谢您的订购，我们会尽快为您配送",
+    btnBackHome: "返回首页", btnViewOrders: "查看订单",
+    userCenterTitle: "用户中心",
+    menuTitle: "菜单", menuProfile: "个人资料", menuOrders: "我的订单",
+    menuAddress: "收货地址", menuFavorites: "我的收藏", menuCoupons: "优惠券", menuHelp: "帮助中心",
+    profileTitle: "个人资料", labelNickname: "昵称", labelEmail: "邮箱", labelGender: "性别",
+    btnSave: "保存修改",
+    ordersTitle: "我的订单",
+    addressTitle: "收货地址", defaultLabel: "默认", btnAddAddress: "添加新地址",
+    favoritesTitle: "我的收藏", couponsTitle: "我的优惠券",
+    helpTitle: "帮助中心",
+    faq1Q: "如何下单购买？", faq1A: '浏览产品页面，选择您喜欢的有机产品，点击"加入购物车"，然后进入购物车点击"去结算"，填写收货信息并选择支付方式即可完成下单。',
+    faq2Q: "配送范围和运费？", faq2A: "我们目前配送金边、西港、暹粒和马德望四个城市。金边市区2小时内送达，满$30免运费，不满$30收取$2运费。",
+    faq3Q: "如何确认产品是有机的？", faq3A: "所有产品均获得柬埔寨农业部有机认证，包装上有有机认证标志。我们建立了完整的可追溯系统，您可以追踪每批次产品的种植信息。",
+    faq4Q: "支持哪些支付方式？", faq4A: "我们支持现金货到付款、ABA银行转账、Wing移动支付、ACLEDA银行、Visa/Master信用卡、支付宝和微信支付。",
+    placeholderName: "请输入收货人姓名", placeholderPhone: "+855 XX XXX XXXX",
+    placeholderAddress: "请输入街道、门牌号等详细信息",
+    cityPhnomPenh: "金边 Phnom Penh", citySihanoukville: "西哈努克港 Sihanoukville",
+    citySiemReap: "暹粒 Siem Reap", cityBattambang: "马德望 Battambang",
+    noCoupon: "不使用优惠券",
+    aboutTitle: "关于我们", aboutSubtitle: "白马有机果蔬农场的故事",
+    storySectionLabel: "品牌故事",
+    brandStoryTitle: "从一片土地到千家万户",
+    brandStory1: "白马有机农场创立于2018年，坐落于柬埔寨白马省风景如画的丘陵地带。这里阳光充足、雨水丰沛、土壤肥沃，是大自然赐予的绝佳农耕之地。",
+    brandStory2: '我们秉承"尊重自然、回归本源"的理念，坚持不使用任何化学合成农药、化肥、生长调节剂。通过有机堆肥、生物防治、轮作休耕等传统农耕智慧，让土地保持最自然的状态。',
+    brandStory3: "经过六年的发展，白马农场已从最初的小规模种植，成长为拥有12种有机产品、服务2000+家庭的大型有机农场，是柬埔寨有机农业的标杆企业。",
+    certTitle: "有机认证", cert1Title: "柬埔寨农业部认证",
+    cert1Desc: "获得柬埔寨农业部有机产品认证，符合国际有机农业标准。",
+    cert2Title: "无公害种植", cert2Desc: "100%不使用化学农药和人工肥料，全程天然种植。",
+    cert3Title: "可追溯系统", cert3Desc: "每批次产品均可追溯至种植地块，确保食品安全透明。",
+    contactTitle: "联系我们", addressLabel: "农场地址", addressValue: "柬埔寨白马省白马市",
+    phoneLabel: "联系电话", emailLabel: "电子邮箱", hoursLabel: "营业时间", hoursValue: "周一至周日 6:00-20:00",
+    deliveryTitle: "配送范围", city1: "金边", city2: "西哈努克港", city3: "暹粒", city4: "马德望",
+    cityDelivery: "2小时达", cityDelivery2: "当日达", cityDelivery3: "次日达",
+    farmLabel: "白马有机农场", farmImageLabel: "白马有机农场实景",
+    certLabel: "有机认证农场",
+    allProductsTitle: "全部有机产品", allProductsSubtitle: "精选白马农场每日新鲜有机果蔬"
+  },
+  en: {
+    brandName: "White Horse Organic Farm", nav_home: "Home", nav_all: "All Products", nav_veg: "Vegetables",
+    nav_fruit: "Fruits", nav_produce: "Produce", nav_about: "About",
+    searchPlaceholder: "Search organic products...",
+    heroBadge: "Cambodia's #1 Organic Farm",
+    heroTitle: "White Horse Organic Farm",
+    heroSubtitle: "Farm to Table · 100% Organic Certified · Daily Fresh Pick",
+    btnShopNow: "Shop Now", btnLearnMore: "Learn More",
+    feature1Title: "Daily Fresh Pick", feature1Desc: "Picked in the morning, delivered same day",
+    feature2Title: "2-Hour Delivery", feature2Desc: "Phnom Penh city delivery in 2 hours",
+    feature3Title: "100% Organic Certified", feature3Desc: "Certified by Cambodia Ministry of Agriculture",
+    productsTitle: "Seasonal Best Sellers",
+    filterAll: "All", filterVeg: "Vegetables", filterFruit: "Fruits", filterProduce: "Produce",
+    addToCart: "Add to Cart", quickView: "Quick View",
+    storyLabel: "OUR STORY", storyTitle: "From Cambodia's White Horse Farm",
+    storyDesc1: "Located in the scenic Kep Province of Cambodia, White Horse Organic Farm boasts an unparalleled natural environment. We combine traditional farming wisdom with modern organic techniques, using zero chemical pesticides or synthetic fertilizers.",
+    storyDesc2: "From seeding to harvesting, from picking to delivery, we rigorously control every step to bring the freshest, healthiest organic ingredients to your table. We believe that good food comes from respect for the land and reverence for nature.",
+    stat1: "Organic Products", stat2: "Happy Customers", stat3: "km Delivery Range", stat4: "Positive Rating",
+    aiLabel: "AI RECOMMENDATION", aiTitle: "AI Smart Nutrition",
+    footerDesc: "White Horse Organic Farm is dedicated to providing you with the freshest and healthiest organic fruits and vegetables. From farm to your home, making every meal full of natural flavor.",
+    footerHelp: "Help Center", footerFAQ: "FAQ", footerShipping: "Shipping Info", footerReturn: "Return Policy", footerPrivacy: "Privacy Policy",
+    footerContact: "Contact Us", footerAddress: "Kep Province, Cambodia",
+    footerHours: "6:00 - 20:00", footerFollow: "Follow Us", footerPayment: "Payment Methods",
+    cartTitle: "Shopping Cart", cartSubtotal: "Subtotal", cartShipping: "Shipping", cartTotal: "Total",
+    btnCheckout: "Checkout", btnContinue: "Continue Shopping", emptyCart: "Your cart is empty",
+    productDetailTitle: "Product Details", nutritionTitle: "Nutrition Facts", benefitsTitle: "Health Benefits",
+    suitableTitle: "Suitable For", recipeTitle: "Cooking Guide",
+    btnAddToCart: "Add to Cart", btnBuyNow: "Buy Now",
+    checkoutTitle: "Confirm Order", checkoutSubtitle: "Fill in shipping info to complete order",
+    shippingTitle: "Shipping Address", labelName: "Full Name", labelPhone: "Phone Number", labelCity: "City",
+    labelAddress: "Address", orderItems: "Order Items", couponTitle: "Coupon",
+    subtotal: "Subtotal", shipping: "Shipping", discount: "Discount", total: "Total Amount",
+    confirmOrder: "Confirm Order", freeShippingNote: "Free shipping over $30",
+    paymentTitle: "Payment Method", paymentSubtitle: "Choose your preferred payment method",
+    amountToPay: "Amount to Pay", confirmPayment: "Confirm Payment",
+    payCash: "Cash", payCashDesc: "Pay on Delivery",
+    payABA: "ABA Bank", payABADesc: "Bank Transfer",
+    payWing: "Wing", payWingDesc: "Mobile Payment",
+    payACLEDA: "ACLEDA", payACLEDADesc: "Bank Transfer",
+    payCard: "Credit Card", payAlipay: "Alipay",
+    orderSuccessTitle: "Order Placed Successfully!", orderSuccessDesc: "Thank you for your order. We'll deliver soon.",
+    btnBackHome: "Back to Home", btnViewOrders: "View Orders",
+    userCenterTitle: "User Center",
+    menuTitle: "MENU", menuProfile: "Profile", menuOrders: "My Orders",
+    menuAddress: "Address", menuFavorites: "Favorites", menuCoupons: "Coupons", menuHelp: "Help",
+    profileTitle: "Profile", labelNickname: "Nickname", labelEmail: "Email", labelGender: "Gender",
+    btnSave: "Save Changes",
+    ordersTitle: "My Orders",
+    addressTitle: "Shipping Address", defaultLabel: "Default", btnAddAddress: "Add New Address",
+    favoritesTitle: "My Favorites", couponsTitle: "My Coupons",
+    helpTitle: "Help Center",
+    faq1Q: "How to place an order?", faq1A: "Browse products, add items to cart, then proceed to checkout, fill shipping info and choose payment method.",
+    faq2Q: "Delivery area and fees?", faq2A: "We deliver to Phnom Penh, Sihanoukville, Siem Reap and Battambang. Free shipping over $30.",
+    faq3Q: "How to verify organic products?", faq3A: "All products are certified by Cambodia Ministry of Agriculture with full traceability system.",
+    faq4Q: "What payment methods are supported?", faq4A: "Cash on delivery, ABA Bank, Wing, ACLEDA, Visa/Master, Alipay and WeChat Pay.",
+    placeholderName: "Enter recipient name", placeholderPhone: "+855 XX XXX XXXX",
+    placeholderAddress: "Enter street, house number etc.",
+    cityPhnomPenh: "Phnom Penh", citySihanoukville: "Sihanoukville",
+    citySiemReap: "Siem Reap", cityBattambang: "Battambang",
+    noCoupon: "No coupon",
+    aboutTitle: "About Us", aboutSubtitle: "The story of White Horse Organic Farm",
+    storySectionLabel: "OUR STORY",
+    brandStoryTitle: "From a Piece of Land to Thousands of Homes",
+    brandStory1: "Founded in 2018, White Horse Organic Farm is nestled in the picturesque hills of Cambodia's Kep Province, blessed with abundant sunshine, rainfall, and fertile soil.",
+    brandStory2: "We adhere to the philosophy of \"Respecting Nature, Returning to Roots,\" insisting on zero chemical pesticides, fertilizers, or growth regulators.",
+    brandStory3: "After six years of growth, White Horse Farm has evolved from a small-scale operation to serving 2000+ families with 12 organic products.",
+    certTitle: "Certifications", cert1Title: "Ministry Certified",
+    cert1Desc: "Certified organic by Cambodia's Ministry of Agriculture, meeting international organic standards.",
+    cert2Title: "Chemical-Free", cert2Desc: "100% free of chemical pesticides and synthetic fertilizers. Pure natural farming throughout.",
+    cert3Title: "Traceability", cert3Desc: "Every batch can be traced back to its growing plot, ensuring food safety and transparency.",
+    contactTitle: "Contact Us", addressLabel: "Farm Address", addressValue: "Kep City, Kep Province, Cambodia",
+    phoneLabel: "Phone", emailLabel: "Email", hoursLabel: "Business Hours", hoursValue: "Mon-Sun 6:00-20:00",
+    deliveryTitle: "Delivery Coverage",
+    city1: "Phnom Penh", city2: "Sihanoukville", city3: "Siem Reap", city4: "Battambang",
+    cityDelivery: "2 Hours", cityDelivery2: "Same Day", cityDelivery3: "Next Day",
+    farmLabel: "White Horse Organic Farm", farmImageLabel: "White Horse Farm",
+    certLabel: "Certified Organic Farm",
+    allProductsTitle: "All Organic Products", allProductsSubtitle: "Fresh organic produce from White Horse Farm daily"
+  },
+  km: {
+    brandName: "កសិដ្ឋានបៃតងសេះស", nav_home: "ទំព័រដើម", nav_all: "ផលិតផលទាំងអស់", nav_veg: "បន្លែសរីរាង្គ",
+    nav_fruit: "ផ្លែឈើស្រស់", nav_produce: "ផលិតផលកសិកម្ម", nav_about: "អំពីយើង",
+    searchPlaceholder: "ស្វែងរកផលិតផលសរីរាង្គ...",
+    heroBadge: "កសិដ្ឋានសរីរាង្គលេខ១កម្ពុជា",
+    heroTitle: "កសិដ្ឋានបៃតងសេះស",
+    heroSubtitle: "ពីកសិដ្ឋានដល់តុអាហារ · 100% ទទួលស្គាល់សរីរាង្គ",
+    btnShopNow: "ទិញឥឡូវនេះ", btnLearnMore: "ស្វែងយល់បន្ថែម",
+    feature1Title: "ការជ្រើសរើសប្រចាំថ្ងៃ", feature1Desc: "ជ្រើសរើសព្រឹក ចែកចាយថ្ងៃតែមួយ",
+    feature2Title: "ដឹកជញ្ជូន 2 ម៉ោង", feature2Desc: "ដឹកជញ្ជូនក្នុងរយៈពេល 2 ម៉ោង",
+    feature3Title: "100% ទទួលស្គាល់សរីរាង្គ", feature3Desc: "បានបញ្ជាក់ដោយក្រសួងកសិកម្ម",
+    productsTitle: "ផលិតផលលក់ដាច់បំផុត",
+    filterAll: "ទាំងអស់", filterVeg: "បន្លែ", filterFruit: "ផ្លែឈើ", filterProduce: "ផលិតផលកសិកម្ម",
+    addToCart: "បន្ថែមទៅកន្ត្រក", quickView: "មើលលឿន",
+    storyLabel: "រឿងរ៉ាវយីហោ", storyTitle: "មកពីកសិដ្ឋានបៃតងសេះស",
+    stat1: "ផលិតផលសរីរាង្គ", stat2: "អតិថិជនពេញចិត្ត", stat3: "គីឡូម៉ែតចែកចាយ", stat4: "ការវាយតម្លៃវិជ្ជមាន",
+    aiLabel: "AI ណែនាំ", aiTitle: "AI ណែនាំអាហារូបត្ថម្ភ",
+    footerDesc: "កសិដ្ឋានបៃតងសេះស ប្តេជ្ញាផ្តល់ជូនអ្នកនូវបន្លែ និងផ្លែឈើសរីរាង្គដែលស្រស់ថ្លោងបំផុត",
+    footerHelp: "កន្លែងជំនួយ", footerFAQ: "សំណួរញឹកញាប់", footerShipping: "ព័ត៌មានដឹកជញ្ជូន",
+    footerContact: "ទំនាក់ទំនង", footerAddress: "ខេត្តកែប កម្ពុជា",
+    footerHours: "6:00 - 20:00", footerFollow: "តាមដានយើង", footerPayment: "វិធីសាស្រ្តទូទាត់",
+    cartTitle: "កន្ត្រកទិញឥវ៉ាន់", cartSubtotal: "សរុបរង", cartShipping: "ដឹកជញ្ជូន", cartTotal: "សរុប",
+    btnCheckout: "ទូទាត់", btnContinue: "បន្តទិញ", emptyCart: "កន្ត្រកទទេ",
+    productDetailTitle: "ព័ត៌មានលម្អិតផលិតផល", btnAddToCart: "បន្ថែមទៅកន្ត្រក", btnBuyNow: "ទិញឥឡូវនេះ",
+    checkoutTitle: "បញ្ជាក់ការបញ្ជាទិញ", shippingTitle: "អាសយដ្ឋានដឹកជញ្ជូន",
+    labelName: "ឈ្មោះ", labelPhone: "លេខទូរស័ព្ទ", labelCity: "ក្រុង",
+    labelAddress: "អាសយដ្ឋានលម្អិត", orderItems: "ផលិតផលការបញ្ជាទិញ",
+    subtotal: "សរុបរង", shipping: "ដឹកជញ្ជូន", discount: "បញ្ចុះតម្លៃ", total: "ចំនួនសរុប",
+    confirmOrder: "បញ្ជាក់ការបញ្ជាទិញ", freeShippingNote: "ដឹកជញ្ជូនឥតគិតថ្លៃលើ $30",
+    paymentTitle: "ជ្រើសរើសវិធីទូទាត់", amountToPay: "ចំនួនត្រូវទូទាត់", confirmPayment: "បញ្ជាក់ការទូទាត់",
+    payCash: "សាច់ប្រាក់", payCashDesc: "បង់ប្រាក់ពេលទទួល",
+    payABA: "ABA Bank", payWing: "Wing", payACLEDA: "ACLEDA",
+    payCard: "Credit Card", payAlipay: "Alipay",
+    orderSuccessTitle: "ការបញ្ជាទិញជោគជ័យ", orderSuccessDesc: "អរគុណសម្រាប់ការបញ្ជាទិញរបស់អ្នក",
+    btnBackHome: "ត្រឡប់ទៅទំព័រដើម", btnViewOrders: "មើលការបញ្ជាទិញ",
+    userCenterTitle: "កម្មវិធីប្រើប្រាស់",
+    menuTitle: "ម៉ឺនុយ", menuProfile: "ប្រវត្តិរូប", menuOrders: "ការបញ្ជាទិញ",
+    menuAddress: "អាសយដ្ឋាន", menuFavorites: "ចំណូលចិត្ត", menuCoupons: "កុបុង", menuHelp: "ជំនួយ",
+    profileTitle: "ប្រវត្តិរូប", labelNickname: "ឈ្មោះហៅក្រៅ", labelEmail: "អ៊ីមែល", labelGender: "ភេទ",
+    btnSave: "រក្សាទុក",
+    ordersTitle: "ការបញ្ជាទិញ",
+    addressTitle: "អាសយដ្ឋានដឹកជញ្ជូន", defaultLabel: "លំនាំដើម", btnAddAddress: "បន្ថែមអាសយដ្ឋានថ្មី",
+    favoritesTitle: "ចំណូលចិត្ត", couponsTitle: "កុបុង", helpTitle: "ជំនួយ",
+    placeholderName: "បញ្ចូលឈ្មោះ", placeholderPhone: "+855 XX XXX XXXX",
+    placeholderAddress: "បញ្ចូលអាសយដ្ឋាន",
+    cityPhnomPenh: "ភ្នំពេញ", citySihanoukville: "ព្រះសីហនុ",
+    citySiemReap: "សៀមរាប", cityBattambang: "បាត់ដំបង",
+    noCoupon: "គ្មានកុបុង",
+    aboutTitle: "អំពីយើង", aboutSubtitle: "រឿងរ៉ាវកសិដ្ឋានបៃតងសេះស",
+    storySectionLabel: "រឿងរ៉ាវយីហោ",
+    brandStoryTitle: "ពីដីមួយក្តាប់ដល់ផ្ទះរាប់ពាន់",
+    brandStory1: "កសិដ្ឋានបៃតងសេះស ត្រូវបានបង្កើតឡើងនៅឆ្នាំ 2018 ស្ថិតនៅខេត្តកែប ប្រទេសកម្ពុជា។",
+    brandStory2: "យើងអនុវត្តតាមទស្សនវិជ្ជា \"គោរពធម្មជាតិ វិលត្រឡប់ទៅឫសគល់\" ដោយមិនប្រើថ្នាំកសិកម្មគីមី។",
+    brandStory3: "បន្ទាប់ពីការអភិវឌ្ឍ 6 ឆ្នាំ កសិដ្ឋានបៃតងសេះស បានក្លាយជាកសិដ្ឋានសរីរាង្គធំមួយ។",
+    certTitle: "ការទទួលស្គាល់", cert1Title: "បានបញ្ជាក់ដោយក្រសួង",
+    cert1Desc: "បានបញ្ជាក់សរីរាង្គដោយក្រសួងកសិកម្មកម្ពុជា។",
+    cert2Title: "គ្មានសារធាតុគីមី", cert2Desc: "100% គ្មានថ្នាំកសិកម្មគីមី និងជីសិប្បន្ម។",
+    cert3Title: "ប្រព័ន្ធតាមដាន", cert3Desc: "ផលិតផលគ្រប់ប៉ាត់គីឡូអាចតាមដានបាន។",
+    contactTitle: "ទំនាក់ទំនង", addressLabel: "អាសយដ្ឋានកសិដ្ឋាន",
+    phoneLabel: "ទូរស័ព្ទ", emailLabel: "អ៊ីមែល", hoursLabel: "ម៉ោងបើក", hoursValue: "ច័ន្ទ-អាទិត្យ 6:00-20:00",
+    deliveryTitle: "ជម្រៀកចែកចាយ",
+    city1: "ភ្នំពេញ", city2: "ព្រះសីហនុ", city3: "សៀមរាប", city4: "បាត់ដំបង",
+    cityDelivery: "2 ម៉ោង", cityDelivery2: "ថ្ងៃតែមួយ", cityDelivery3: "ថ្ងៃបន្ទាប់",
+    farmLabel: "កសិដ្ឋានបៃតងសេះស", farmImageLabel: "កសិដ្ឋានបៃតងសេះស",
+    certLabel: "កសិដ្ឋានសរីរាង្គបានបញ្ជាក់",
+    allProductsTitle: "ផលិតផលសរីរាង្គទាំងអស់", allProductsSubtitle: "ផលិតផលសរីរាង្គស្រស់ៗពីកសិដ្ឋានបៃតងសេះស"
+  }
+};
+
+// ===== 产品数据 =====
+const PRODUCTS = [
+  { id: 1, name: "有机菠菜", nameEn: "Organic Spinach", nameKm: "បន្លែជីរាង្គ", category: "vegetable", price: 2.50, unit: "500g", emoji: "🥬", nutrients: { iron: 85, vitc: 92, calcium: 70, fiber: 88 }, highlights: ["iron", "vitc"], tags: ["抗氧化", "补血", "护眼"], audience: ["baby", "pregnant", "elderly", "fitness", "office"], recipes: [{ name: "蒜蓉菠菜", time: "5分钟", diff: "简单" }, { name: "菠菜蛋花汤", time: "10分钟", diff: "简单" }, { name: "凉拌菠菜", time: "8分钟", diff: "简单" }] },
+  { id: 2, name: "有机胡萝卜", nameEn: "Organic Carrot", nameKm: "ការ៉ូតសរីរាង្គ", category: "vegetable", price: 1.80, unit: "500g", emoji: "🥕", nutrients: { vitc: 45, vita: 98, fiber: 75, calcium: 30 }, highlights: ["vita"], tags: ["护眼", "增强免疫力"], audience: ["baby", "pregnant", "elderly"], recipes: [{ name: "胡萝卜炒蛋", time: "8分钟", diff: "简单" }, { name: "胡萝卜炖牛肉", time: "45分钟", diff: "中等" }, { name: "鲜榨胡萝卜汁", time: "5分钟", diff: "简单" }] },
+  { id: 3, name: "有机番茄", nameEn: "Organic Tomato", nameKm: "ប៉េងប៉ោះសរីរាង្គ", category: "vegetable", price: 2.20, unit: "500g", emoji: "🍅", nutrients: { vitc: 80, lycopene: 95, fiber: 60, calcium: 20 }, highlights: ["vitc"], tags: ["抗氧化", "美白", "降血压"], audience: ["pregnant", "fitness", "office"], recipes: [{ name: "番茄炒蛋", time: "8分钟", diff: "简单" }, { name: "番茄牛腩汤", time: "60分钟", diff: "中等" }, { name: "凉拌番茄", time: "3分钟", diff: "简单" }] },
+  { id: 4, name: "有机黄瓜", nameEn: "Organic Cucumber", nameKm: "ត្រសក់សរីរាង្គ", category: "vegetable", price: 1.50, unit: "500g", emoji: "🥒", nutrients: { vitc: 30, fiber: 50, water: 96, calcium: 25 }, highlights: ["water"], tags: ["美白", "补水", "降压"], audience: ["fitness", "office", "elderly"], recipes: [{ name: "拍黄瓜", time: "3分钟", diff: "简单" }, { name: "黄瓜沙拉", time: "5分钟", diff: "简单" }, { name: "黄瓜炒鸡蛋", time: "8分钟", diff: "简单" }] },
+  { id: 5, name: "有机西兰花", nameEn: "Organic Broccoli", nameKm: "ប្រូកខូលីសរីរាង្គ", category: "vegetable", price: 3.00, unit: "500g", emoji: "🥦", nutrients: { vitc: 98, fiber: 85, calcium: 65, iron: 45 }, highlights: ["vitc", "fiber"], tags: ["抗癌", "增强免疫力", "抗氧化"], audience: ["baby", "pregnant", "elderly", "fitness"], recipes: [{ name: "蒜蓉西兰花", time: "6分钟", diff: "简单" }, { name: "西兰花炒虾仁", time: "10分钟", diff: "中等" }, { name: "清蒸西兰花", time: "8分钟", diff: "简单" }] },
+  { id: 6, name: "有机生菜", nameEn: "Organic Lettuce", nameKm: "សាឡាដសរីរាង្គ", category: "vegetable", price: 1.60, unit: "500g", emoji: "🥬", nutrients: { vitc: 35, fiber: 55, calcium: 40, iron: 30 }, highlights: ["fiber"], tags: ["减肥", "助消化"], audience: ["fitness", "office"], recipes: [{ name: "蔬菜沙拉", time: "5分钟", diff: "简单" }, { name: "蚝油生菜", time: "4分钟", diff: "简单" }, { name: "生菜包肉", time: "15分钟", diff: "中等" }] },
+  { id: 7, name: "有机芒果", nameEn: "Organic Mango", nameKm: "ស្វាយសរីរាង្គ", category: "fruit", price: 4.50, unit: "1kg", emoji: "🥭", nutrients: { vitc: 75, vita: 80, fiber: 45, calcium: 15 }, highlights: ["vitc", "vita"], tags: ["增强免疫力", "护眼", "助消化"], audience: ["baby", "pregnant", "elderly"], recipes: [{ name: "芒果沙拉", time: "5分钟", diff: "简单" }, { name: "芒果汁", time: "3分钟", diff: "简单" }, { name: "芒果糯米饭", time: "30分钟", diff: "中等" }] },
+  { id: 8, name: "有机火龙果", nameEn: "Organic Dragon Fruit", nameKm: "ផ្លែមង្ឃុតសរីរាង្គ", category: "fruit", price: 3.80, unit: "1kg", emoji: "🐉", nutrients: { vitc: 50, fiber: 70, calcium: 30, iron: 20 }, highlights: ["fiber"], tags: ["美白", "抗氧化", "助消化"], audience: ["pregnant", "fitness", "office"], recipes: [{ name: "火龙果沙拉", time: "3分钟", diff: "简单" }, { name: "火龙果酸奶", time: "2分钟", diff: "简单" }, { name: "火龙果冰沙", time: "3分钟", diff: "简单" }] },
+  { id: 9, name: "有机香蕉", nameEn: "Organic Banana", nameKm: "ចេកសរីរាង្គ", category: "fruit", price: 2.00, unit: "1kg", emoji: "🍌", nutrients: { potassium: 90, fiber: 60, vitc: 25, calcium: 10 }, highlights: ["potassium"], tags: ["补充能量", "助消化"], audience: ["baby", "elderly", "fitness"], recipes: [{ name: "香蕉奶昔", time: "3分钟", diff: "简单" }, { name: "烤香蕉", time: "15分钟", diff: "简单" }, { name: "香蕉蛋糕", time: "45分钟", diff: "中等" }] },
+  { id: 10, name: "有机香米", nameEn: "Organic Jasmine Rice", nameKm: "អង្ករសរីរាង្គ", category: "produce", price: 5.00, unit: "5kg", emoji: "🍚", nutrients: { fiber: 20, protein: 25, iron: 35, calcium: 15 }, highlights: ["protein"], tags: ["补充能量", "主食"], audience: ["baby", "pregnant", "elderly", "fitness"], recipes: [{ name: "蒸米饭", time: "25分钟", diff: "简单" }, { name: "蛋炒饭", time: "10分钟", diff: "简单" }, { name: "粥", time: "40分钟", diff: "简单" }] },
+  { id: 11, name: "有机紫甘蓝", nameEn: "Organic Red Cabbage", nameKm: "កាប់បៃតងក្រហមសរីរាង្គ", category: "vegetable", price: 2.80, unit: "500g", emoji: "🟣", nutrients: { vitc: 85, fiber: 80, iron: 40, calcium: 50 }, highlights: ["vitc", "fiber"], tags: ["抗氧化", "增强免疫力"], audience: ["pregnant", "fitness"], recipes: [{ name: "凉拌紫甘蓝", time: "5分钟", diff: "简单" }, { name: "紫甘蓝沙拉", time: "5分钟", diff: "简单" }, { name: "炒紫甘蓝", time: "6分钟", diff: "简单" }] },
+  { id: 12, name: "有机柠檬", nameEn: "Organic Lemon", nameKm: "ក្រូចឆ្មាសរីរាង្គ", category: "fruit", price: 3.20, unit: "500g", emoji: "🍋", nutrients: { vitc: 98, fiber: 40, calcium: 30, iron: 10 }, highlights: ["vitc"], tags: ["美白", "增强免疫力"], audience: ["pregnant", "fitness", "office"], recipes: [{ name: "柠檬水", time: "2分钟", diff: "简单" }, { name: "柠檬蜂蜜茶", time: "5分钟", diff: "简单" }, { name: "柠檬蒸鱼", time: "15分钟", diff: "中等" }] }
+];
+
+// ===== AI 营养套餐数据 =====
+const AI_PACKAGES = [
+  {
+    id: 1, name: "护眼套餐", nameEn: "Eye Care Pack", nameKm: "កញ្ចប់ថែទាំភ្នែក",
+    emoji: "👁️", target: "学生、上班族、老人 / Students, Office Workers, Elderly / សិស្ស អ្នកធ្វើការ មនុស្សចាស់",
+    products: "🥬 有机菠菜 + 🥕 有机胡萝卜 + 🥭 有机芒果",
+    nutrition: "富含维A 98%、维C 92%、叶黄素",
+    color: "from-blue-500/10 to-indigo-500/10", borderColor: "border-blue-200", accent: "#4F81BD"
+  },
+  {
+    id: 2, name: "补血套餐", nameEn: "Blood Tonic Pack", nameKm: "កញ្ចប់បំពេញឈាម",
+    emoji: "🩸", target: "女性、孕妇、贫血人群 / Women, Pregnant, Anemic / ស្ត្រី ស្ត្រីពពោះ អ្នកខ្សោយឈាម",
+    products: "🥬 有机菠菜 + 🍅 有机番茄 + 🍌 有机香蕉",
+    nutrition: "富含铁 85%、叶酸、维C促进铁吸收",
+    color: "from-red-500/10 to-pink-500/10", borderColor: "border-red-200", accent: "#C5504B"
+  },
+  {
+    id: 3, name: "降压套餐", nameEn: "Heart Health Pack", nameKm: "កញ្ចប់សុខភាពបេះដូង",
+    emoji: "❤️", target: "中老年、高血压人群 / Middle-aged, Hypertension / មជ្ឈិមវ័យ សម្ពាធឈាមខ្ពស់",
+    products: "🥬 有机菠菜 + 🥒 有机黄瓜 + 🍅 有机番茄",
+    nutrition: "富含钾 90%、膳食纤维 88%、低钠",
+    color: "from-green-500/10 to-emerald-500/10", borderColor: "border-green-200", accent: "#4A9B5E"
+  },
+  {
+    id: 4, name: "美白套餐", nameEn: "Skin Glow Pack", nameKm: "កញ្ចប់ភ្លឺថ្លា",
+    emoji: "✨", target: "爱美女性、上班族 / Beauty, Office Workers / សម្រស់ អ្នកធ្វើការ",
+    products: "🍅 有机番茄 + 🥒 有机黄瓜 + 🐉 有机火龙果",
+    nutrition: "富含维C 85%、番茄红素、花青素",
+    color: "from-purple-500/10 to-pink-500/10", borderColor: "border-purple-200", accent: "#8B5CF6"
+  }
+];
+
+// ===== 适合人群图标配置 =====
+const AUDIENCE_CONFIG = {
+  baby: { icon: "👶", label: { zh: "儿童", en: "Kids", km: "កុមារ" }, color: "#4A9B5E", tip: { zh: "富含营养，助力成长", en: "Nutrient-rich for growth", km: "សម្បូរជាតិចំណី" } },
+  pregnant: { icon: "🤰", label: { zh: "孕妇", en: "Pregnant", km: "ស្ត្រីមានផ្ទៃពោះ" }, color: "#C5A880", tip: { zh: "叶酸丰富，母婴健康", en: "Rich in folate for mom & baby", km: "សម្បូរអាស៊ីតហ្វ័រ" } },
+  elderly: { icon: "👴", label: { zh: "老人", en: "Elderly", km: "មនុស្សចាស់" }, color: "#4F81BD", tip: { zh: "易消化，低糖低盐", en: "Easy to digest, low sugar", km: "ងាយស្រួលរំលាយ" } },
+  fitness: { icon: "💪", label: { zh: "健身", en: "Fitness", km: "ហាត់ប្រាណ" }, color: "#C5504B", tip: { zh: "高蛋白，低卡路里", en: "High protein, low calorie", km: "ប្រូតេអ៊ីនខ្ពស់" } },
+  office: { icon: "👩\u200d💻", label: { zh: "办公", en: "Office", km: "ការិយាល័យ" }, color: "#8B5CF6", tip: { zh: "缓解眼疲劳，提精力", en: "Relieves eye strain, boosts energy", km: "កាត់បន្ថយការហត់នឿយភ្នែក" } }
+};
+
+// ===== 高亮营养素映射 =====
+const NUTRIENT_LABELS = {
+  iron: { zh: "铁", en: "Iron", km: "ដែក" },
+  vitc: { zh: "维C", en: "Vit C", km: "វីតាមីនC" },
+  vita: { zh: "维A", en: "Vit A", km: "វីតាមីនA" },
+  calcium: { zh: "钙", en: "Calcium", km: "កាល់ស្យូម" },
+  fiber: { zh: "纤维", en: "Fiber", km: "សរសៃ" },
+  potassium: { zh: "钾", en: "Potassium", km: "ប៉ូតាស្យូម" },
+  lycopene: { zh: "番茄红素", en: "Lycopene", km: "លីកូប៉ែន" },
+  water: { zh: "水分", en: "Water", km: "ទឹក" },
+  protein: { zh: "蛋白质", en: "Protein", km: "ប្រូតេអ៊ីន" }
+};
+
+
+// ===== 全局状态 =====
+let currentLang = 'zh';
+let currentPage = 'home';
+let cart = [];
+let favorites = JSON.parse(localStorage.getItem('wh_favorites') || '[]');
+let orders = JSON.parse(localStorage.getItem('wh_orders') || '[]');
+let selectedPayment = null;
+let currentFilter = 'all';
+let currentProduct = null;
+let selectedSpec = '500g';
+let selectedQty = 1;
+
+// ===== IndexedDB 数据层 =====
+const DB_NAME = 'whitehorse_db';
+const DB_VERSION = 1;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onerror = () => reject(req.error);
+    req.onsuccess = () => resolve(req.result);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains('cart')) {
+        db.createObjectStore('cart', { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains('favorites')) {
+        db.createObjectStore('favorites', { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains('orders')) {
+        db.createObjectStore('orders', { keyPath: 'orderNo' });
+      }
+    };
+  });
+}
+
+async function saveCartToDB() {
+  try {
+    const db = await openDB();
+    const tx = db.transaction('cart', 'readwrite');
+    const store = tx.objectStore('cart');
+    // Clear and re-add all items
+    const clearReq = store.clear();
+    clearReq.onsuccess = () => {
+      cart.forEach(item => store.put(item));
+    };
+    await new Promise((r) => { tx.oncomplete = r; });
+    db.close();
+  } catch(e) { console.log('DB save error:', e); }
+}
+
+async function loadCartFromDB() {
+  try {
+    const db = await openDB();
+    const tx = db.transaction('cart', 'readonly');
+    const store = tx.objectStore('cart');
+    const items = await new Promise((resolve) => {
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => resolve([]);
+    });
+    if (items && items.length > 0) {
+      cart = items;
+    }
+    db.close();
+  } catch(e) { console.log('DB load error:', e); }
+}
+
+async function addToCartDB(item) {
+  try {
+    const db = await openDB();
+    const tx = db.transaction('cart', 'readwrite');
+    const store = tx.objectStore('cart');
+    const existing = await new Promise((r) => {
+      const req = store.get(item.id);
+      req.onsuccess = () => r(req.result);
+      req.onerror = () => r(null);
+    });
+    if (existing) {
+      existing.qty = (existing.qty || 1) + (item.qty || 1);
+      await new Promise((r) => { const req = store.put(existing); req.onsuccess = r; });
+    } else {
+      await new Promise((r) => { const req = store.put(item); req.onsuccess = r; });
+    }
+    db.close();
+  } catch(e) { console.log('DB add error:', e); }
+}
+
+async function removeFromCartDB(productId) {
+  try {
+    const db = await openDB();
+    const tx = db.transaction('cart', 'readwrite');
+    const store = tx.objectStore('cart');
+    store.delete(productId);
+    await new Promise((r) => { tx.oncomplete = r; });
+    db.close();
+  } catch(e) { console.log('DB remove error:', e); }
+}
+
+// ===== 购物车功能 =====
+function addToCart(productId, spec, qty) {
+  const product = PRODUCTS.find(p => p.id === productId);
+  if (!product) return;
+  spec = spec || product.unit;
+  qty = qty || 1;
+  const cartId = productId + '_' + spec;
+  const existing = cart.find(item => item.cartId === cartId);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    const specMult = getSpecMultiplier(spec);
+    const price = (product.price * specMult).toFixed(2);
+    cart.push({
+      cartId, id: productId, name: product.name,
+      nameEn: product.nameEn, nameKm: product.nameKm,
+      emoji: product.emoji, spec, qty, price: parseFloat(price),
+      basePrice: product.price
+    });
+  }
+  saveCart();
+  renderCart();
+  updateCartBadge();
+  showToast('已加入购物车');
+}
+
+function getSpecMultiplier(spec) {
+  const map = { '500g': 1, '1kg': 2, '2kg': 4, '5kg': 10 };
+  return map[spec] || 1;
+}
+
+function removeFromCart(cartId) {
+  cart = cart.filter(item => item.cartId !== cartId);
+  saveCart();
+  renderCart();
+  updateCartBadge();
+  // Also sync checkout if visible
+  if (currentPage === 'checkout') renderCheckout();
+}
+
+function updateCartQty(cartId, delta) {
+  const item = cart.find(c => c.cartId === cartId);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    removeFromCart(cartId);
+    return;
+  }
+  saveCart();
+  renderCart();
+  updateCartBadge();
+  if (currentPage === 'checkout') renderCheckout();
+}
+
+function saveCart() {
+  saveCartToDB();
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((sum, item) => sum + item.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.style.display = total > 0 ? 'flex' : 'none';
+}
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+}
+
+function getShippingFee() {
+  const subtotal = getCartTotal();
+  return subtotal >= 30 ? 0 : 2;
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  if (!container) return;
+  if (cart.length === 0) {
+    container.innerHTML = '<div class="text-center py-10 opacity-40"><i class="fas fa-shopping-cart text-4xl mb-3"></i><p data-i18n="emptyCart">购物车是空的</p></div>';
+    return;
+  }
+  container.innerHTML = cart.map(item => `
+    <div class="flex items-center gap-3 py-3 border-b border-black/5">
+      <div class="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, var(--warm-bg), #fff); border: 1px solid rgba(15,26,19,0.06);">${item.emoji}</div>
+      <div class="flex-1 min-w-0">
+        <div class="font-semibold text-sm truncate">${item.name}</div>
+        <div class="text-xs opacity-50">${item.spec}</div>
+      </div>
+      <div class="flex items-center gap-1">
+        <button class="qty-btn" onclick="updateCartQty('${item.cartId}', -1)"><i class="fas fa-minus text-xs"></i></button>
+        <span class="text-sm font-semibold w-6 text-center">${item.qty}</span>
+        <button class="qty-btn" onclick="updateCartQty('${item.cartId}', 1)"><i class="fas fa-plus text-xs"></i></button>
+      </div>
+      <div class="font-semibold text-sm w-16 text-right">$${(item.price * item.qty).toFixed(2)}</div>
+      <button class="w-7 h-7 rounded-full hover:bg-red-50 flex items-center justify-center text-red-400 hover:text-red-600 transition-colors" onclick="removeFromCart('${item.cartId}')">
+        <i class="fas fa-trash-alt text-xs"></i>
+      </button>
+    </div>
+  `).join('');
+
+  const subtotal = getCartTotal();
+  const shipping = getShippingFee();
+  document.getElementById('cartSubtotal').textContent = '$' + subtotal.toFixed(2);
+  document.getElementById('cartShipping').textContent = shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2);
+  document.getElementById('cartTotal').textContent = '$' + (subtotal + shipping).toFixed(2);
+}
+
+// ===== 产品渲染 =====
+function renderProducts(gridId, filter) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  let items = PRODUCTS;
+  if (filter && filter !== 'all') {
+    items = PRODUCTS.filter(p => p.category === filter);
+  }
+  grid.innerHTML = items.map(p => `
+    <div class="product-card" onclick="openProductModal(${p.id})">
+      <div class="quick-view">
+        <span class="px-5 py-2.5 rounded-full text-white text-sm font-semibold border border-white/30" data-i18n="quickView">快速查看</span>
+      </div>
+      <div class="p-4">
+        <div class="w-full h-36 rounded-lg flex items-center justify-center text-5xl mb-3" style="background: linear-gradient(135deg, rgba(168,197,168,0.08), rgba(197,168,128,0.06));">${p.emoji}</div>
+        <div class="flex items-center gap-2 mb-1.5">
+          <span class="tag-og"><i class="fas fa-leaf text-xs"></i> OG</span>
+          ${p.highlights.map(h => `<span class="tag-highlight"><i class="fas fa-star text-[8px]"></i> ${getNutrientLabel(h)}</span>`).join('')}
+        </div>
+        <h3 class="font-semibold text-sm mb-0.5" style="color: var(--farm-green);">${p.name}</h3>
+        <p class="text-xs opacity-40 mb-2">${p.nameEn}</p>
+        <div class="flex items-center justify-between">
+          <div>
+            <span class="text-lg font-bold text-champagne-dark">$${p.price.toFixed(2)}</span>
+            <span class="text-xs opacity-40">/${p.unit}</span>
+          </div>
+          <button class="w-9 h-9 rounded-full bg-gradient-to-r from-champagne to-champagne-dark text-white flex items-center justify-center hover:shadow-md transition-all" onclick="event.stopPropagation(); addToCart(${p.id}, '${p.unit}', 1)">
+            <i class="fas fa-plus text-sm"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getNutrientLabel(key) {
+  const n = NUTRIENT_LABELS[key];
+  if (!n) return key;
+  if (currentLang === 'zh') return n.zh;
+  if (currentLang === 'km') return n.km;
+  return n.en;
+}
+
+function filterProducts(cat) {
+  currentFilter = cat;
+  // Update active state on all filter groups
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.filter === cat);
+  });
+  renderProducts('productGrid', cat);
+  renderProducts('productGrid2', cat);
+}
+
+// ===== AI 套餐渲染 =====
+function renderAiPackages() {
+  const container = document.getElementById('aiPackageScroll');
+  if (!container) return;
+  container.innerHTML = AI_PACKAGES.map(pkg => `
+    <div class="ai-card" style="border-left: 3px solid ${pkg.accent};">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-12 h-12 rounded-full flex items-center justify-center text-2xl" style="background: linear-gradient(135deg, ${pkg.accent}20, ${pkg.accent}10);">${pkg.emoji}</div>
+        <div>
+          <h3 class="font-bold text-base" style="color: var(--farm-green);">${pkg.name}</h3>
+          <p class="text-xs opacity-50">${currentLang === 'en' ? pkg.nameEn : (currentLang === 'km' ? pkg.nameKm : pkg.name)}</p>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="text-xs font-semibold opacity-60 mb-1">${currentLang === 'zh' ? '适用人群' : (currentLang === 'en' ? 'Target' : 'អ្នកអនុវត្ត')}</div>
+        <div class="text-sm opacity-80">${pkg.target.split(' / ')[currentLang === 'zh' ? 0 : (currentLang === 'en' ? 1 : 2)]}</div>
+      </div>
+      <div class="mb-3">
+        <div class="text-xs font-semibold opacity-60 mb-1">${currentLang === 'zh' ? '包含产品' : (currentLang === 'en' ? 'Includes' : 'រួមបញ្ចូល')}</div>
+        <div class="text-sm">${pkg.products}</div>
+      </div>
+      <div class="px-3 py-2 rounded-lg text-xs font-medium" style="background: ${pkg.accent}12; color: ${pkg.accent};">
+        ${pkg.nutrition}
+      </div>
+    </div>
+  `).join('');
+}
+
+function scrollAi(dir) {
+  const el = document.getElementById('aiPackageScroll');
+  if (!el) return;
+  el.scrollBy({ left: dir === 'left' ? -320 : 320, behavior: 'smooth' });
+}
+
+// ===== 产品详情弹窗 =====
+function openProductModal(productId) {
+  const p = PRODUCTS.find(x => x.id === productId);
+  if (!p) return;
+  currentProduct = p;
+  selectedSpec = '500g';
+  selectedQty = 1;
+  const modal = document.getElementById('productModal');
+  const body = document.getElementById('productModalBody');
+
+  // Build nutrition rings
+  const nutKeys = Object.keys(p.nutrients || {});
+  const nutritionHTML = nutKeys.slice(0, 4).map((k, i) => {
+    const val = p.nutrients[k];
+    const label = getNutrientLabel(k);
+    const colors = ['#C5504B', '#4A9B5E', '#4F81BD', '#C5A880'];
+    const color = colors[i % colors.length];
+    return `
+      <div class="flex flex-col items-center">
+        <div class="ring-progress" style="background: conic-gradient(${color} ${val * 3.6}deg, rgba(15,26,19,0.06) 0deg);">
+          <div class="ring-inner">
+            <span class="ring-value">${val}%</span>
+            <span class="ring-label">${label}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Build health tags
+  const tagColors = ['#C5504B', '#4A9B5E', '#4F81BD', '#C5A880', '#8B5CF6', '#E8873A'];
+  const tagsHTML = (p.tags || []).map((tag, i) => `
+    <span class="health-tag" style="background: ${tagColors[i % tagColors.length]}12; color: ${tagColors[i % tagColors.length]}; animation-delay: ${i * 0.2}s;">${tag}</span>
+  `).join('');
+
+  // Build audience icons
+  const audienceHTML = (p.audience || []).map(a => {
+    const cfg = AUDIENCE_CONFIG[a];
+    if (!cfg) return '';
+    const label = cfg.label[currentLang] || cfg.label.zh;
+    const tip = cfg.tip[currentLang] || cfg.tip.zh;
+    return `
+      <div class="audience-icon" style="background: ${cfg.color}15; border: 2px solid ${cfg.color}30;">
+        <span style="filter: grayscale(0.3);">${cfg.icon}</span>
+        <span class="audience-tooltip">${label}: ${tip}</span>
+      </div>
+    `;
+  }).join('');
+
+  // Build recipes
+  const recipesHTML = (p.recipes || []).map(r => `
+    <div class="recipe-card">
+      <div class="font-semibold text-sm mb-1" style="color: var(--farm-green);">${r.name}</div>
+      <div class="flex items-center gap-3 text-xs opacity-50 mb-2">
+        <span><i class="far fa-clock mr-1"></i>${r.time}</span>
+        <span><i class="fas fa-signal mr-1"></i>${r.diff}</span>
+      </div>
+      <button class="text-xs font-semibold text-champagne-dark hover:text-champagne transition-colors" onclick="showToast('查看做法功能即将上线')">
+        ${currentLang === 'zh' ? '查看做法' : (currentLang === 'en' ? 'View Recipe' : 'មើលវិធីធ្វើ')} <i class="fas fa-arrow-right text-[10px]"></i>
+      </button>
+    </div>
+  `).join('');
+
+  body.innerHTML = `
+    <div class="grid lg:grid-cols-2 gap-6">
+      <div class="rounded-xl flex items-center justify-center" style="min-height: 280px; background: linear-gradient(135deg, rgba(168,197,168,0.1), rgba(197,168,128,0.08));">
+        <div class="text-center">
+          <div class="text-8xl mb-3">${p.emoji}</div>
+          <div class="tag-og inline-flex"><i class="fas fa-leaf text-xs"></i> Organic Certified</div>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-2xl font-bold mb-1" style="color: var(--farm-green);">${currentLang === 'en' ? p.nameEn : (currentLang === 'km' ? p.nameKm : p.name)}</h2>
+        <p class="text-sm opacity-40 mb-3">${p.nameEn} · ${p.nameKm}</p>
+        <div class="flex items-baseline gap-2 mb-4">
+          <span class="text-3xl font-bold text-champagne-dark">$${p.price.toFixed(2)}</span>
+          <span class="text-sm opacity-40">/${p.unit}</span>
+        </div>
+        <!-- 规格选择 -->
+        <div class="mb-4">
+          <div class="text-sm font-semibold mb-2 opacity-70">${currentLang === 'zh' ? '规格' : (currentLang === 'en' ? 'Size' : 'ទំហំ')}</div>
+          <div class="flex gap-2">
+            ${['500g','1kg','2kg','5kg'].map(s => `
+              <button class="spec-btn ${s === selectedSpec ? 'active' : ''}" onclick="selectSpec('${s}', this)">${s}</button>
+            `).join('')}
+          </div>
+        </div>
+        <!-- 数量 -->
+        <div class="mb-5">
+          <div class="text-sm font-semibold mb-2 opacity-70">${currentLang === 'zh' ? '数量' : (currentLang === 'en' ? 'Quantity' : 'បរិមាណ')}</div>
+          <div class="qty-selector inline-flex">
+            <button class="qty-btn" onclick="updateModalQty(-1)">-</button>
+            <input type="text" class="qty-input" value="1" id="modalQty" readonly>
+            <button class="qty-btn" onclick="updateModalQty(1)">+</button>
+          </div>
+        </div>
+        <!-- 营养环形进度条 -->
+        <div class="mb-5">
+          <div class="text-sm font-semibold mb-3 opacity-70">
+            <i class="fas fa-chart-pie text-champagne mr-1"></i>
+            ${currentLang === 'zh' ? 'AI营养分析' : (currentLang === 'en' ? 'AI Nutrition Analysis' : 'AI វិភាគអាហារូបត្ថម្ភ')}
+          </div>
+          <div class="flex gap-4 flex-wrap">${nutritionHTML}</div>
+        </div>
+      </div>
+    </div>
+    <!-- 健康益处标签云 -->
+    <div class="mt-6">
+      <div class="text-sm font-semibold mb-3 opacity-70">
+        <i class="fas fa-heart text-champagne mr-1"></i>
+        ${currentLang === 'zh' ? 'AI健康益处' : (currentLang === 'en' ? 'Health Benefits' : 'អត្ថប្រយោជន៍សុខភាព')}
+      </div>
+      <div class="tag-cloud">${tagsHTML}</div>
+    </div>
+    <!-- 适合人群 -->
+    <div class="mt-6">
+      <div class="text-sm font-semibold mb-3 opacity-70">
+        <i class="fas fa-users text-champagne mr-1"></i>
+        ${currentLang === 'zh' ? 'AI推荐人群' : (currentLang === 'en' ? 'Recommended For' : 'ណែនាំសម្រាប់')}
+      </div>
+      <div class="flex gap-3 flex-wrap">${audienceHTML}</div>
+    </div>
+    <!-- 烹饪指南 -->
+    <div class="mt-6">
+      <div class="text-sm font-semibold mb-3 opacity-70">
+        <i class="fas fa-utensils text-champagne mr-1"></i>
+        ${currentLang === 'zh' ? 'AI烹饪指南' : (currentLang === 'en' ? 'Cooking Guide' : 'មគ្គុទេសក៍ចំអិន')}
+      </div>
+      <div class="grid grid-cols-3 gap-3">${recipesHTML}</div>
+    </div>
+    <!-- 按钮 -->
+    <div class="flex gap-3 mt-6 pt-4 border-t border-black/5">
+      <button class="btn-primary flex-1 justify-center" onclick="addModalToCart()">
+        <i class="fas fa-shopping-cart"></i> <span data-i18n="btnAddToCart">加入购物车</span>
+      </button>
+      <button class="btn-green flex-1 justify-center" onclick="buyNow()">
+        <i class="fas fa-bolt"></i> <span data-i18n="btnBuyNow">立即购买</span>
+      </button>
+    </div>
+  `;
+
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.remove('open');
+  document.body.style.overflow = '';
+  currentProduct = null;
+}
+
+function selectSpec(spec, btn) {
+  selectedSpec = spec;
+  btn.parentElement.querySelectorAll('.spec-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function updateModalQty(delta) {
+  selectedQty = Math.max(1, selectedQty + delta);
+  const input = document.getElementById('modalQty');
+  if (input) input.value = selectedQty;
+}
+
+function addModalToCart() {
+  if (!currentProduct) return;
+  addToCart(currentProduct.id, selectedSpec, selectedQty);
+  closeProductModal();
+}
+
+function buyNow() {
+  if (!currentProduct) return;
+  addToCart(currentProduct.id, selectedSpec, selectedQty);
+  closeProductModal();
+  goCheckout();
+}
+
+// ===== Toast =====
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  const text = document.getElementById('toastText');
+  text.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ===== 购物车面板 =====
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartPanel').classList.toggle('open');
+  renderCart();
+}
+
+// ===== 路由系统 =====
+function navigateTo(page, subParam) {
+  // Update nav active state
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll(`.nav-link[onclick*="'${page}'"]`).forEach(l => l.classList.add('active'));
+
+  // Hide all pages
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+
+  // Show target page
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+
+  currentPage = page;
+  window.scrollTo(0, 0);
+
+  // Page-specific init
+  if (page === 'home') {
+    renderProducts('productGrid', currentFilter);
+    renderAiPackages();
+    animateStats();
+  } else if (page === 'products') {
+    renderProducts('productGrid2', subParam || currentFilter);
+    if (subParam) {
+      currentFilter = subParam;
+      document.querySelectorAll('.filter-tab').forEach(t => {
+        t.classList.toggle('active', t.dataset.filter === subParam);
+      });
+    }
+  } else if (page === 'checkout') {
+    renderCheckout();
+  } else if (page === 'payment') {
+    renderPayment();
+  } else if (page === 'user') {
+    renderOrders();
+    renderFavorites();
+  } else if (page === 'about') {
+    // about page is static
+  }
+
+  // Update hash
+  window.location.hash = page;
+}
+
+// ===== 统计数字动画 =====
+function animateStats() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const duration = 1500;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
+}
+
+// ===== 结算页面 =====
+function goCheckout() {
+  if (cart.length === 0) { showToast('购物车是空的'); return; }
+  toggleCart();
+  navigateTo('checkout');
+}
+
+function renderCheckout() {
+  const container = document.getElementById('checkoutItems');
+  if (!container) return;
+  container.innerHTML = cart.map(item => {
+    const product = PRODUCTS.find(p => p.id === item.id);
+    return `
+      <div class="flex items-center gap-3 py-2 border-b border-black/5">
+        <div class="text-3xl">${item.emoji}</div>
+        <div class="flex-1">
+          <div class="text-sm font-semibold">${item.name}</div>
+          <div class="text-xs opacity-50">${item.spec} x ${item.qty}</div>
+        </div>
+        <div class="font-semibold text-sm">$${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+    `;
+  }).join('');
+  updateCheckoutSummary();
+}
+
+function updateCheckoutSummary() {
+  const subtotal = getCartTotal();
+  const shipping = getShippingFee();
+  const discount = getDiscount();
+  const total = subtotal + shipping - discount;
+  document.getElementById('coSubtotal').textContent = '$' + subtotal.toFixed(2);
+  document.getElementById('coShipping').textContent = shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2);
+  document.getElementById('coDiscount').textContent = '-$' + discount.toFixed(2);
+  document.getElementById('coTotal').textContent = '$' + total.toFixed(2);
+}
+
+function getDiscount() {
+  const coupon = document.getElementById('couponSelect')?.value;
+  const subtotal = getCartTotal();
+  if (coupon === 'NEW10') return subtotal * 0.1;
+  if (coupon === 'SAVE5') return Math.min(5, subtotal);
+  if (coupon === 'VIP15') return subtotal * 0.15;
+  return 0;
+}
+
+function applyCoupon() { updateCheckoutSummary(); }
+
+function goToPayment() {
+  const name = document.getElementById('coName').value;
+  const phone = document.getElementById('coPhone').value;
+  const address = document.getElementById('coAddress').value;
+  if (!name || !phone || !address) {
+    showToast('请填写完整的收货信息');
+    return;
+  }
+  navigateTo('payment');
+}
+
+// ===== 支付页面 =====
+function renderPayment() {
+  const total = getCartTotal() + getShippingFee() - getDiscount();
+  document.getElementById('paymentAmount').textContent = '$' + total.toFixed(2);
+}
+
+function selectPayment(method) {
+  selectedPayment = method;
+  document.querySelectorAll('.pay-method-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.method === method);
+  });
+  document.getElementById('confirmPayBtn').disabled = false;
+}
+
+function confirmPayment() {
+  if (!selectedPayment) { showToast('请选择支付方式'); return; }
+  // Create order
+  const orderNo = '#ORD-' + new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' + String(orders.length + 1).padStart(3,'0');
+  const order = {
+    orderNo, date: new Date().toISOString(),
+    items: [...cart],
+    total: getCartTotal() + getShippingFee() - getDiscount(),
+    payment: selectedPayment,
+    status: selectedPayment === 'cash' ? 'pending' : 'paid',
+    address: {
+      name: document.getElementById('coName').value,
+      phone: document.getElementById('coPhone').value,
+      city: document.getElementById('coCity').value,
+      detail: document.getElementById('coAddress').value
+    }
+  };
+  orders.unshift(order);
+  localStorage.setItem('wh_orders', JSON.stringify(orders));
+  // Clear cart
+  cart = [];
+  saveCart();
+  updateCartBadge();
+  // Show success
+  document.getElementById('successOrderNo').textContent = orderNo;
+  navigateTo('success');
+}
+
+// ===== 用户中心 =====
+function switchUserTab(tab) {
+  document.querySelectorAll('.uc-menu-item').forEach(i => i.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('.uc-tab').forEach(t => t.style.display = 'none');
+  const target = document.getElementById('uc-' + tab);
+  if (target) target.style.display = 'block';
+  if (tab === 'orders') renderOrders();
+  if (tab === 'favorites') renderFavorites();
+}
+
+function renderOrders() {
+  const container = document.getElementById('ordersList');
+  if (!container) return;
+  if (orders.length === 0) {
+    container.innerHTML = '<div class="text-center py-8 opacity-40">暂无订单</div>';
+    return;
+  }
+  const statusLabels = {
+    pending: { zh: '待发货', en: 'Pending', km: 'រង់ចាំ', color: '#C5A880' },
+    paid: { zh: '已支付', en: 'Paid', km: 'បានបង់', color: '#4A9B5E' },
+    shipped: { zh: '配送中', en: 'Shipping', km: 'កំពុងដឹក', color: '#4F81BD' },
+    delivered: { zh: '已完成', en: 'Delivered', km: 'បានបញ្ចប់', color: '#7FA87F' }
+  };
+  container.innerHTML = orders.map(o => {
+    const st = statusLabels[o.status] || statusLabels.pending;
+    const label = st[currentLang] || st.zh;
+    return `
+      <div class="order-card">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <span class="font-semibold text-sm">${o.orderNo}</span>
+            <span class="text-xs opacity-40 ml-2">${o.date.slice(0,10)}</span>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-semibold" style="background: ${st.color}15; color: ${st.color};">${label}</span>
+        </div>
+        <div class="space-y-1 mb-3">
+          ${o.items.map(it => `
+            <div class="flex items-center gap-2 text-sm">
+              <span>${it.emoji}</span>
+              <span class="flex-1">${it.name} x ${it.qty}</span>
+              <span class="opacity-60">$${(it.price * it.qty).toFixed(2)}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="flex justify-between pt-3 border-t border-black/5">
+          <span class="text-sm opacity-60">${currentLang === 'zh' ? '共计' : (currentLang === 'en' ? 'Total' : 'សរុប')} ${o.items.reduce((s, i) => s + i.qty, 0)} ${currentLang === 'zh' ? '件' : (currentLang === 'en' ? 'items' : 'ធាតុ')}</span>
+          <span class="font-bold text-champagne-dark">$${o.total.toFixed(2)}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderFavorites() {
+  const grid = document.getElementById('favoritesGrid');
+  if (!grid) return;
+  const favProducts = PRODUCTS.filter(p => favorites.includes(p.id));
+  if (favProducts.length === 0) {
+    grid.innerHTML = '<div class="col-span-full text-center py-8 opacity-40">暂无收藏</div>';
+    return;
+  }
+  grid.innerHTML = favProducts.map(p => `
+    <div class="product-card" onclick="openProductModal(${p.id})">
+      <div class="p-4">
+        <div class="w-full h-28 rounded-lg flex items-center justify-center text-4xl mb-2" style="background: linear-gradient(135deg, rgba(168,197,168,0.08), rgba(197,168,128,0.06));">${p.emoji}</div>
+        <h4 class="font-semibold text-sm">${p.name}</h4>
+        <p class="text-xs opacity-40">${p.nameEn}</p>
+        <div class="flex justify-between items-center mt-2">
+          <span class="font-bold text-champagne-dark">$${p.price.toFixed(2)}</span>
+          <button class="w-7 h-7 rounded-full bg-champagne text-white flex items-center justify-center text-xs" onclick="event.stopPropagation(); addToCart(${p.id}, '${p.unit}', 1)">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== 语言切换 =====
+function setLang(lang) {
+  currentLang = lang;
+  // Update buttons
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  // Update HTML lang
+  document.documentElement.lang = lang === 'km' ? 'km' : (lang === 'en' ? 'en' : 'zh');
+  // Apply translations
+  applyI18n();
+  // Re-render dynamic content
+  renderProducts('productGrid', currentFilter);
+  renderProducts('productGrid2', currentFilter);
+  renderAiPackages();
+  if (currentPage === 'checkout') renderCheckout();
+  if (currentPage === 'user') { renderOrders(); renderFavorites(); }
+}
+
+function applyI18n() {
+  const dict = I18N[currentLang] || I18N.zh;
+  // Text content
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (dict[key]) el.textContent = dict[key];
+  });
+  // Placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.dataset.i18nPlaceholder;
+    if (dict[key]) el.placeholder = dict[key];
+  });
+}
+
+// ===== 页面初始化 =====
+async function init() {
+  await loadCartFromDB();
+  updateCartBadge();
+
+  // Check hash route
+  const hash = window.location.hash.slice(1);
+  if (hash && document.getElementById('page-' + hash)) {
+    navigateTo(hash);
+  } else {
+    navigateTo('home');
+  }
+
+  // Render initial content
+  renderProducts('productGrid', 'all');
+  renderAiPackages();
+
+  // Load saved language
+  const savedLang = localStorage.getItem('wh_lang');
+  if (savedLang && I18N[savedLang]) {
+    currentLang = savedLang;
+    document.querySelectorAll('.lang-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim() === (savedLang === 'zh' ? '中' : (savedLang === 'en' ? 'EN' : 'ខ្មែរ')));
+    });
+  }
+  applyI18n();
+
+  // IntersectionObserver for stats animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateStats();
+        observer.unobserve(entry.target);
+      }
+    });
+  });
+  const statsSection = document.querySelector('[data-count]')?.closest('.grid');
+  if (statsSection) observer.observe(statsSection);
+}
+
+// Hash change listener
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash.slice(1);
+  if (hash && hash !== currentPage) navigateTo(hash);
+});
+
+// Modal close on escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeProductModal();
+    if (document.getElementById('cartPanel').classList.contains('open')) toggleCart();
+  }
+});
+
+// Close modal on overlay click
+document.getElementById('productModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('productModal')) closeProductModal();
+});
+
+// Init
+init();
+</script>
+
+</body>
+</html>
