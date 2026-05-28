@@ -238,6 +238,85 @@ body {
 }
 .modal-overlay.open .modal-content { transform: scale(1); }
 
+/* ===== 注册弹窗 ===== */
+.auth-modal .modal-content { max-width: 480px; }
+.auth-tabs {
+  display: flex; gap: 0; border-bottom: 2px solid rgba(15,26,19,0.06);
+  margin: 0 32px;
+}
+.auth-tab {
+  flex: 1; text-align: center; padding: 16px 0; font-size: 15px; font-weight: 600;
+  color: rgba(15,26,19,0.4); cursor: pointer; position: relative;
+  transition: var(--transition); border: none; background: none;
+}
+.auth-tab.active { color: var(--farm-green); }
+.auth-tab.active::after {
+  content: ''; position: absolute; bottom: -2px; left: 20%; right: 20%;
+  height: 2px; background: var(--champagne); border-radius: 1px;
+}
+.auth-body { padding: 28px 32px 32px; }
+.auth-field { margin-bottom: 18px; }
+.auth-field label {
+  display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px;
+  color: var(--farm-green);
+}
+.auth-field input, .auth-field select {
+  width: 100%; padding: 12px 16px; border: 1.5px solid rgba(15,26,19,0.1);
+  border-radius: 10px; font-size: 14px; transition: var(--transition);
+  background: #fff; outline: none;
+}
+.auth-field input:focus, .auth-field select:focus {
+  border-color: var(--champagne);
+  box-shadow: 0 0 0 3px rgba(197,168,128,0.12);
+}
+.auth-field .field-error {
+  color: #e74c3c; font-size: 12px; margin-top: 4px; display: none;
+}
+.auth-field.has-error input { border-color: #e74c3c; }
+.auth-field.has-error .field-error { display: block; }
+.auth-btn {
+  width: 100%; padding: 14px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, var(--champagne), var(--champagne-dark));
+  color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+  transition: var(--transition); margin-top: 8px;
+}
+.auth-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(197,168,128,0.35);
+}
+.auth-btn:disabled {
+  opacity: 0.6; cursor: not-allowed; transform: none;
+  box-shadow: none;
+}
+.auth-switch {
+  text-align: center; margin-top: 18px; font-size: 13px; color: rgba(15,26,19,0.5);
+}
+.auth-switch a {
+  color: var(--champagne-dark); font-weight: 600; cursor: pointer;
+}
+.auth-switch a:hover { text-decoration: underline; }
+.auth-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 20px 0; color: rgba(15,26,19,0.3); font-size: 12px;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(15,26,19,0.08);
+}
+.user-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--champagne), var(--champagne-dark));
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 600; font-size: 14px; cursor: pointer;
+}
+.guest-tip {
+  text-align: center; padding: 60px 20px;
+}
+.guest-tip i {
+  font-size: 56px; color: var(--mint); margin-bottom: 16px; display: block;
+}
+.guest-tip h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+.guest-tip p { font-size: 14px; color: rgba(15,26,19,0.5); margin-bottom: 24px; }
+
 /* ===== 环形进度条 ===== */
 .ring-progress {
   width: 80px; height: 80px; border-radius: 50%;
@@ -495,10 +574,12 @@ body {
         <i class="fas fa-shopping-cart text-lg"></i>
         <span class="absolute -top-1.5 -right-2 bg-gradient-to-r from-red-500 to-red-400 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center" id="cartBadge">0</span>
       </button>
-      <!-- 用户 -->
-      <button class="text-white/70 hover:text-champagne transition-all" onclick="navigateTo('user')">
-        <i class="fas fa-user-circle text-xl"></i>
-      </button>
+      <!-- 用户/登录注册 -->
+      <div id="navUserArea">
+        <button class="text-white/70 hover:text-champagne transition-all" onclick="openAuthModal()" id="navLoginBtn">
+          <i class="fas fa-user-circle text-xl"></i>
+        </button>
+      </div>
     </div>
   </div>
 </nav>
@@ -948,14 +1029,19 @@ body {
 <!-- ===== 用户中心页 ===== -->
 <section id="page-user" class="page-section">
   <div class="py-12" style="background: linear-gradient(135deg, var(--farm-green), var(--farm-green-light));">
-    <div class="max-w-7xl mx-auto px-6 flex items-center gap-4">
-      <div class="w-16 h-16 rounded-full bg-gradient-to-br from-champagne to-champagne-dark flex items-center justify-center text-2xl">
-        <i class="fas fa-user text-white"></i>
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-champagne to-champagne-dark flex items-center justify-center text-2xl">
+          <i class="fas fa-user text-white"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-white" data-i18n="userCenterTitle">用户中心</h1>
+          <p class="text-white/50 text-sm" id="userHeaderEmail">user@example.com</p>
+        </div>
       </div>
-      <div>
-        <h1 class="text-2xl font-bold text-white" data-i18n="userCenterTitle">用户中心</h1>
-        <p class="text-white/50 text-sm">user@example.com</p>
-      </div>
+      <button onclick="logout()" class="hidden md:flex items-center gap-2 px-4 py-2 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all text-sm" id="btnLogout" style="display:none;">
+        <i class="fas fa-sign-out-alt"></i> <span data-i18n="logoutBtn">退出</span>
+      </button>
     </div>
   </div>
   <div class="max-w-7xl mx-auto px-6 py-8 flex gap-6">
@@ -983,6 +1069,15 @@ body {
     </aside>
     <!-- 主内容 -->
     <div class="flex-1" id="userContent">
+      <!-- 未登录提示 -->
+      <div id="uc-guest" class="uc-tab" style="display:none;">
+        <div class="guest-tip">
+          <i class="fas fa-user-circle"></i>
+          <h3 data-i18n="guestTipTitle">请先登录</h3>
+          <p data-i18n="guestTipDesc">登录后查看您的订单、收藏和优惠券</p>
+          <button class="btn-primary" onclick="openAuthModal('login')" data-i18n="btnLoginNow">立即登录</button>
+        </div>
+      </div>
       <!-- 个人资料 -->
       <div id="uc-profile" class="uc-tab">
         <div class="bg-white rounded-xl p-6 border border-black/5">
@@ -1324,7 +1419,26 @@ const I18N = {
     cityDelivery: "2小时达", cityDelivery2: "当日达", cityDelivery3: "次日达",
     farmLabel: "白马有机农场", farmImageLabel: "白马有机农场实景",
     certLabel: "有机认证农场",
-    allProductsTitle: "全部有机产品", allProductsSubtitle: "精选白马农场每日新鲜有机果蔬"
+    allProductsTitle: "全部有机产品", allProductsSubtitle: "精选白马农场每日新鲜有机果蔬",
+    btnLogin: "登录", tabLogin: "登录", tabRegister: "注册账号",
+    labelPhoneEmail: "手机号/邮箱", labelPassword: "密码", labelRegPassword: "设置密码",
+    labelConfirmPassword: "确认密码", labelRemember: "记住我",
+    linkForgot: "忘记密码?", linkLoginNow: "立即登录",
+    btnGuest: "游客浏览", dividerOr: "或",
+    optSelect: "请选择", optMale: "男", optFemale: "女", optSecret: "保密",
+    agreeText: "我已阅读并同意", termsLink: "《用户协议》", andText: "和", privacyLink: "《隐私政策》",
+    hasAccount: "已有账号?", btnRegister: "创建账号",
+    regSuccessTitle: "注册成功!", regSuccessMsg: "欢迎加入白马有机果蔬农场",
+    btnStart: "开始使用",
+    errNickname: "请输入昵称", errPhone: "请输入有效的手机号",
+    errEmail: "请输入有效的邮箱地址", errPassword: "密码至少6位，需包含字母和数字",
+    errConfirm: "两次密码输入不一致", errGender: "请选择性别",
+    errAgree: "请同意用户协议和隐私政策", errExists: "该手机号或邮箱已被注册",
+    errLoginEmpty: "请输入账号和密码", errLoginFail: "账号或密码错误",
+    loginSuccess: "登录成功，欢迎回来!", logoutSuccess: "已退出登录",
+    guestWelcome: "以游客身份浏览",
+    guestTipTitle: "请先登录", guestTipDesc: "登录后查看您的订单、收藏和优惠券",
+    btnLoginNow: "立即登录", logoutBtn: "退出"
   },
   en: {
     brandName: "White Horse Organic Farm", nav_home: "Home", nav_all: "All Products", nav_veg: "Vegetables",
@@ -1403,7 +1517,26 @@ const I18N = {
     cityDelivery: "2 Hours", cityDelivery2: "Same Day", cityDelivery3: "Next Day",
     farmLabel: "White Horse Organic Farm", farmImageLabel: "White Horse Farm",
     certLabel: "Certified Organic Farm",
-    allProductsTitle: "All Organic Products", allProductsSubtitle: "Fresh organic produce from White Horse Farm daily"
+    allProductsTitle: "All Organic Products", allProductsSubtitle: "Fresh organic produce from White Horse Farm daily",
+    btnLogin: "Login", tabLogin: "Login", tabRegister: "Register",
+    labelPhoneEmail: "Phone/Email", labelPassword: "Password", labelRegPassword: "Set Password",
+    labelConfirmPassword: "Confirm Password", labelRemember: "Remember me",
+    linkForgot: "Forgot password?", linkLoginNow: "Login now",
+    btnGuest: "Browse as Guest", dividerOr: "or",
+    optSelect: "Select", optMale: "Male", optFemale: "Female", optSecret: "Secret",
+    agreeText: "I agree to", termsLink: "Terms", andText: "and", privacyLink: "Privacy Policy",
+    hasAccount: "Already have an account?", btnRegister: "Create Account",
+    regSuccessTitle: "Registration Successful!", regSuccessMsg: "Welcome to White Horse Organic Farm",
+    btnStart: "Get Started",
+    errNickname: "Please enter nickname", errPhone: "Please enter valid phone",
+    errEmail: "Please enter valid email", errPassword: "Min 6 chars with letters and numbers",
+    errConfirm: "Passwords do not match", errGender: "Please select gender",
+    errAgree: "Please agree to Terms and Privacy", errExists: "Phone or email already registered",
+    errLoginEmpty: "Please enter account and password", errLoginFail: "Invalid account or password",
+    loginSuccess: "Login successful, welcome back!", logoutSuccess: "Logged out",
+    guestWelcome: "Browsing as guest",
+    guestTipTitle: "Please Login", guestTipDesc: "Login to view your orders, favorites and coupons",
+    btnLoginNow: "Login Now", logoutBtn: "Logout"
   },
   km: {
     brandName: "កសិដ្ឋានបៃតងសេះស", nav_home: "ទំព័រដើម", nav_all: "ផលិតផលទាំងអស់", nav_veg: "បន្លែសរីរាង្គ",
@@ -1470,7 +1603,26 @@ const I18N = {
     cityDelivery: "2 ម៉ោង", cityDelivery2: "ថ្ងៃតែមួយ", cityDelivery3: "ថ្ងៃបន្ទាប់",
     farmLabel: "កសិដ្ឋានបៃតងសេះស", farmImageLabel: "កសិដ្ឋានបៃតងសេះស",
     certLabel: "កសិដ្ឋានសរីរាង្គបានបញ្ជាក់",
-    allProductsTitle: "ផលិតផលសរីរាង្គទាំងអស់", allProductsSubtitle: "ផលិតផលសរីរាង្គស្រស់ៗពីកសិដ្ឋានបៃតងសេះស"
+    allProductsTitle: "ផលិតផលសរីរាង្គទាំងអស់", allProductsSubtitle: "ផលិតផលសរីរាង្គស្រស់ៗពីកសិដ្ឋានបៃតងសេះស",
+    btnLogin: "ចូល", tabLogin: "ចូល", tabRegister: "ចុះឈ្មោះ",
+    labelPhoneEmail: "ទូរស័ព្ទ/អ៊ីមែល", labelPassword: "ពាក្យសម្ងាត់", labelRegPassword: "កំណត់ពាក្យសម្ងាត់",
+    labelConfirmPassword: "បញ្ជាក់ពាក្យសម្ងាត់", labelRemember: "ចងចាំខ្ញុំ",
+    linkForgot: "ភ្លេចពាក្យសម្ងាត់?", linkLoginNow: "ចូលឥឡូវនេះ",
+    btnGuest: "មើលជាភ្ញៀវ", dividerOr: "ឬ",
+    optSelect: "ជ្រើសរើស", optMale: "ប្រុស", optFemale: "ស្រី", optSecret: "សម្ងាត់",
+    agreeText: "ខ្ញុំយល់ព្រមនឹង", termsLink: "លក្ខខណ្ឌ", andText: "និង", privacyLink: "គោលការណ៍ឯកជនភាព",
+    hasAccount: "មានគណនីហើយ?", btnRegister: "បង្កើតគណនី",
+    regSuccessTitle: "ចុះឈ្មោះជោគជ័យ!", regSuccessMsg: "សូមស្វាគមន៍មកកាន់កសិដ្ឋានបៃតងសេះស",
+    btnStart: "ចាប់ផ្តើមប្រើ",
+    errNickname: "សូមបញ្ចូលឈ្មោះ", errPhone: "សូមបញ្ចូលលេខទូរស័ព្ទត្រឹមត្រូវ",
+    errEmail: "សូមបញ្ចូលអ៊ីមែលត្រឹមត្រូវ", errPassword: "យ៉ាងតិច៦តួអក្សរនិងលេខ",
+    errConfirm: "ពាក្យសម្ងាត់មិនត្រូវគ្នា", errGender: "សូមជ្រើសរើសភេទ",
+    errAgree: "សូមយល់ព្រមលក្ខខណ្ឌ", errExists: "លេខទូរស័ព្ទឬអ៊ីមែលបានចុះឈ្មោះហើយ",
+    errLoginEmpty: "សូមបញ្ចូលគណនីនិងពាក្យសម្ងាត់", errLoginFail: "គណនីឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ",
+    loginSuccess: "ចូលជោគជ័យ សូមស្វាគមន៍!", logoutSuccess: "បានចាកចេញ",
+    guestWelcome: "កំពុងមើលជាភ្ញៀវ",
+    guestTipTitle: "សូមចូល", guestTipDesc: "ចូលដើម្បីមើលការកម្មង់ ចំណូលចិត្ត និងគូប៉ុង",
+    btnLoginNow: "ចូលឥឡូវនេះ", logoutBtn: "ចាកចេញ"
   }
 };
 
@@ -2064,8 +2216,14 @@ function navigateTo(page, subParam) {
   } else if (page === 'payment') {
     renderPayment();
   } else if (page === 'user') {
-    renderOrders();
-    renderFavorites();
+    if (currentUser) {
+      renderUserProfile();
+      renderOrders();
+      renderFavorites();
+      showGuestTip(false);
+    } else {
+      showGuestTip(true);
+    }
   } else if (page === 'about') {
     // about page is static
   }
@@ -2357,14 +2515,308 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// ===== 登录/注册系统 =====
+var currentUser = null;
+
+function loadUser() {
+  try {
+    var u = localStorage.getItem('wh_user');
+    if (u) { currentUser = JSON.parse(u); updateNavUser(); }
+  } catch(e) { currentUser = null; }
+}
+
+function saveUser(user) {
+  currentUser = user;
+  localStorage.setItem('wh_user', JSON.stringify(user));
+  updateNavUser();
+}
+
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('wh_user');
+  updateNavUser();
+  showToast(i18n.logoutSuccess || '已退出登录');
+  navigateTo('home');
+}
+
+function updateNavUser() {
+  var area = document.getElementById('navUserArea');
+  if (!area) return;
+  if (currentUser && currentUser.nickname) {
+    var initial = currentUser.nickname.charAt(0).toUpperCase();
+    area.innerHTML = '<div class="user-avatar" onclick="navigateTo(\'user\')" title="' + currentUser.nickname + '">' + initial + '</div>';
+    var logoutBtn = document.getElementById('btnLogout');
+    if (logoutBtn) logoutBtn.style.display = 'flex';
+    var headerEmail = document.getElementById('userHeaderEmail');
+    if (headerEmail) headerEmail.textContent = currentUser.email || currentUser.phone || '';
+  } else {
+    area.innerHTML = '<button class="text-white/70 hover:text-champagne transition-all flex items-center gap-2 text-sm" onclick="openAuthModal()"><i class="fas fa-user-circle text-xl"></i><span class="hidden md:inline" data-i18n="btnLogin">登录</span></button>';
+    applyI18n();
+    var logoutBtn = document.getElementById('btnLogout');
+    if (logoutBtn) logoutBtn.style.display = 'none';
+    var headerEmail = document.getElementById('userHeaderEmail');
+    if (headerEmail) headerEmail.textContent = 'user@example.com';
+  }
+}
+
+function openAuthModal(tab) {
+  var modal = document.getElementById('authModal');
+  if (modal) {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (tab) switchAuthTab(tab);
+  }
+}
+function closeAuthModal() {
+  var modal = document.getElementById('authModal');
+  if (modal) { modal.classList.remove('open'); document.body.style.overflow = ''; }
+}
+function closeAuthModalOnOverlay(e) {
+  if (e.target === document.getElementById('authModal')) closeAuthModal();
+}
+
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('onclick').indexOf(tab) > -1);
+  });
+  document.getElementById('authLoginPanel').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('authRegisterPanel').style.display = tab === 'register' ? 'block' : 'none';
+  clearAuthErrors();
+}
+
+function clearAuthErrors() {
+  document.querySelectorAll('.auth-field.has-error').forEach(function(f) { f.classList.remove('has-error'); });
+}
+function showFieldError(id, show) {
+  var el = document.getElementById(id);
+  if (el) el.classList.toggle('has-error', show);
+}
+
+function handleRegister() {
+  clearAuthErrors();
+  var nickname = document.getElementById('regNickname').value.trim();
+  var phone = document.getElementById('regPhone').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var password = document.getElementById('regPassword').value;
+  var confirm = document.getElementById('regConfirm').value;
+  var gender = document.getElementById('regGender').value;
+  var agree = document.getElementById('regAgree').checked;
+
+  var valid = true;
+  if (!nickname || nickname.length < 2) { showFieldError('rf-nickname', true); valid = false; }
+  if (!phone || !/^\+?[0-9\s\-]{8,15}$/.test(phone)) { showFieldError('rf-phone', true); valid = false; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFieldError('rf-email', true); valid = false; }
+  if (!password || password.length < 6 || !/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) { showFieldError('rf-password', true); valid = false; }
+  if (confirm !== password) { showFieldError('rf-confirm', true); valid = false; }
+  if (!gender) { showFieldError('rf-gender', true); valid = false; }
+  if (!agree) { showToast(i18n.errAgree || '请同意用户协议和隐私政策'); valid = false; }
+  if (!valid) return;
+
+  var users = JSON.parse(localStorage.getItem('wh_users') || '[]');
+  if (users.find(function(u) { return u.email === email || u.phone === phone; })) {
+    showToast(i18n.errExists || '该手机号或邮箱已被注册'); return;
+  }
+
+  var newUser = {
+    id: 'user_' + Date.now(),
+    nickname: nickname,
+    phone: phone,
+    email: email,
+    password: btoa(password),
+    gender: gender,
+    avatar: '',
+    createdAt: new Date().toISOString(),
+    orders: [],
+    favorites: [],
+    coupons: [{code:'NEW10',name:'新客9折',discount:0.1}],
+    addresses: []
+  };
+  users.push(newUser);
+  localStorage.setItem('wh_users', JSON.stringify(users));
+
+  var sessionUser = { id: newUser.id, nickname: nickname, phone: phone, email: email, gender: gender };
+  saveUser(sessionUser);
+
+  closeAuthModal();
+  document.getElementById('regSuccessToast').style.opacity = '1';
+  document.getElementById('regSuccessToast').style.pointerEvents = 'auto';
+  document.getElementById('regSuccessToast').style.transform = 'translate(-50%,-50%) scale(1)';
+
+  document.getElementById('regNickname').value = '';
+  document.getElementById('regPhone').value = '';
+  document.getElementById('regEmail').value = '';
+  document.getElementById('regPassword').value = '';
+  document.getElementById('regConfirm').value = '';
+  document.getElementById('regGender').value = '';
+  document.getElementById('regAgree').checked = false;
+}
+
+function handleLogin() {
+  var account = document.getElementById('loginAccount').value.trim();
+  var password = document.getElementById('loginPassword').value;
+  if (!account || !password) { showToast(i18n.errLoginEmpty || '请输入账号和密码'); return; }
+
+  var users = JSON.parse(localStorage.getItem('wh_users') || '[]');
+  var found = users.find(function(u) {
+    return (u.email === account || u.phone === account) && u.password === btoa(password);
+  });
+  if (!found) { showToast(i18n.errLoginFail || '账号或密码错误'); return; }
+
+  var remember = document.getElementById('loginRemember').checked;
+  var sessionUser = { id: found.id, nickname: found.nickname, phone: found.phone, email: found.email, gender: found.gender };
+  saveUser(sessionUser);
+  if (!remember) sessionStorage.setItem('wh_no_remember', '1');
+  else sessionStorage.removeItem('wh_no_remember');
+
+  closeAuthModal();
+  showToast(i18n.loginSuccess || '登录成功，欢迎回来!');
+  if (currentPage === 'user') { renderOrders(); renderFavorites(); renderUserProfile(); }
+}
+
+function guestLogin() {
+  closeAuthModal();
+  showToast(i18n.guestWelcome || '以游客身份浏览');
+}
+
+function closeRegSuccess() {
+  document.getElementById('regSuccessToast').style.opacity = '0';
+  document.getElementById('regSuccessToast').style.pointerEvents = 'none';
+  document.getElementById('regSuccessToast').style.transform = 'translate(-50%,-50%) scale(0.9)';
+}
+
+function showGuestTip(show) {
+  var guestEl = document.getElementById('uc-guest');
+  var profileEl = document.getElementById('uc-profile');
+  var ordersEl = document.getElementById('uc-orders');
+  var favEl = document.getElementById('uc-favorites');
+  var addrEl = document.getElementById('uc-address');
+  var couponEl = document.getElementById('uc-coupons');
+  if (guestEl) guestEl.style.display = show ? 'block' : 'none';
+  if (profileEl) profileEl.style.display = show ? 'none' : 'block';
+  if (ordersEl) ordersEl.style.display = 'none';
+  if (favEl) favEl.style.display = 'none';
+  if (addrEl) addrEl.style.display = 'none';
+  if (couponEl) couponEl.style.display = 'none';
+}
+
+function renderUserProfile() {
+  if (!currentUser) return;
+  var inputs = document.querySelectorAll('#uc-profile input');
+  if (inputs[0]) inputs[0].value = currentUser.nickname || '';
+  if (inputs[1]) inputs[1].value = currentUser.email || '';
+  if (inputs[2]) inputs[2].value = currentUser.phone || '';
+  var headerEmail = document.querySelector('#page-user p.text-white\\/50');
+  if (headerEmail) headerEmail.textContent = currentUser.email || currentUser.phone || '';
+}
+
+// Escape key to close auth modal
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var m = document.getElementById('authModal');
+    if (m && m.classList.contains('open')) closeAuthModal();
+  }
+});
+
 // Close modal on overlay click
 document.getElementById('productModal').addEventListener('click', (e) => {
   if (e.target === document.getElementById('productModal')) closeProductModal();
 });
 
 // Init
+loadUser();
 init();
 </script>
+
+<!-- ===== 登录/注册弹窗 ===== -->
+<div class="modal-overlay auth-modal" id="authModal" onclick="closeAuthModalOnOverlay(event)">
+  <div class="modal-content" style="overflow:visible;">
+    <!-- 关闭按钮 -->
+    <button onclick="closeAuthModal()" style="position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:none;background:rgba(15,26,19,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all 0.2s;" onmouseover="this.style.background='rgba(15,26,19,0.12)'" onmouseout="this.style.background='rgba(15,26,19,0.06)'">
+      <i class="fas fa-times" style="color:var(--farm-green);opacity:0.5;"></i>
+    </button>
+    <!-- 标签切换 -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')" data-i18n="tabLogin">登录</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')" data-i18n="tabRegister">注册账号</button>
+    </div>
+    <!-- 登录面板 -->
+    <div class="auth-body" id="authLoginPanel">
+      <div class="auth-field">
+        <label data-i18n="labelPhoneEmail">手机号/邮箱</label>
+        <input type="text" id="loginAccount" placeholder="请输入手机号或邮箱">
+      </div>
+      <div class="auth-field">
+        <label data-i18n="labelPassword">密码</label>
+        <input type="password" id="loginPassword" placeholder="请输入密码">
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;color:rgba(15,26,19,0.5);">
+          <input type="checkbox" id="loginRemember" style="accent-color:var(--champagne);"> <span data-i18n="labelRemember">记住我</span>
+        </label>
+        <a style="color:var(--champagne-dark);cursor:pointer;font-weight:500;" data-i18n="linkForgot">忘记密码?</a>
+      </div>
+      <button class="auth-btn" onclick="handleLogin()" data-i18n="btnLogin">立即登录</button>
+      <div class="auth-divider" data-i18n="dividerOr">或</div>
+      <button class="auth-btn" style="background:var(--farm-green-lighter);margin-top:0;" onclick="guestLogin()" data-i18n="btnGuest">游客浏览</button>
+    </div>
+    <!-- 注册面板 -->
+    <div class="auth-body" id="authRegisterPanel" style="display:none;">
+      <div class="auth-field" id="rf-nickname">
+        <label data-i18n="labelNickname">昵称</label>
+        <input type="text" id="regNickname" placeholder="请输入您的昵称" maxlength="20">
+        <div class="field-error" data-i18n="errNickname">请输入昵称</div>
+      </div>
+      <div class="auth-field" id="rf-phone">
+        <label data-i18n="labelPhone">手机号</label>
+        <input type="tel" id="regPhone" placeholder="+855 XX XXX XXXX" maxlength="15">
+        <div class="field-error" data-i18n="errPhone">请输入有效的手机号</div>
+      </div>
+      <div class="auth-field" id="rf-email">
+        <label data-i18n="labelEmail">邮箱</label>
+        <input type="email" id="regEmail" placeholder="your@email.com">
+        <div class="field-error" data-i18n="errEmail">请输入有效的邮箱地址</div>
+      </div>
+      <div class="auth-field" id="rf-password">
+        <label data-i18n="labelRegPassword">设置密码</label>
+        <input type="password" id="regPassword" placeholder="至少6位字母+数字" maxlength="20">
+        <div class="field-error" data-i18n="errPassword">密码至少6位，需包含字母和数字</div>
+      </div>
+      <div class="auth-field" id="rf-confirm">
+        <label data-i18n="labelConfirmPassword">确认密码</label>
+        <input type="password" id="regConfirm" placeholder="请再次输入密码">
+        <div class="field-error" data-i18n="errConfirm">两次密码输入不一致</div>
+      </div>
+      <div class="auth-field" id="rf-gender">
+        <label data-i18n="labelGender">性别</label>
+        <select id="regGender" style="cursor:pointer;">
+          <option value="" data-i18n="optSelect">请选择</option>
+          <option value="male" data-i18n="optMale">男</option>
+          <option value="female" data-i18n="optFemale">女</option>
+          <option value="secret" data-i18n="optSecret">保密</option>
+        </select>
+        <div class="field-error" data-i18n="errGender">请选择性别</div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:12px;color:rgba(15,26,19,0.5);">
+        <input type="checkbox" id="regAgree" style="accent-color:var(--champagne);margin-top:2px;">
+        <span data-i18n="agreeText">我已阅读并同意</span><a style="color:var(--champagne-dark);font-weight:600;" data-i18n="termsLink">《用户协议》</a><span data-i18n="andText">和</span><a style="color:var(--champagne-dark);font-weight:600;" data-i18n="privacyLink">《隐私政策》</a>
+      </div>
+      <button class="auth-btn" onclick="handleRegister()" data-i18n="btnRegister">创建账号</button>
+      <div class="auth-switch">
+        <span data-i18n="hasAccount">已有账号?</span> <a onclick="switchAuthTab('login')" data-i18n="linkLoginNow">立即登录</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 注册成功提示 -->
+<div id="regSuccessToast" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.9);background:#fff;padding:32px 40px;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);z-index:5000;text-align:center;opacity:0;pointer-events:none;transition:all 0.3s;max-width:320px;width:90%;">
+  <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--mint),var(--mint-dark));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+    <i class="fas fa-check" style="color:#fff;font-size:24px;"></i>
+  </div>
+  <h3 style="font-size:18px;font-weight:600;margin-bottom:8px;color:var(--farm-green);" data-i18n="regSuccessTitle">注册成功!</h3>
+  <p style="font-size:14px;color:rgba(15,26,19,0.5);margin-bottom:20px;" data-i18n="regSuccessMsg">欢迎加入白马有机果蔬农场</p>
+  <button class="auth-btn" onclick="closeRegSuccess()" style="margin-top:0;" data-i18n="btnStart">开始使用</button>
+</div>
 
 </body>
 </html>
