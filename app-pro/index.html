@@ -1110,7 +1110,35 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <input type="password" class="login-input" placeholder="&#x9A8C;&#x8BC1;&#u7801;" value="123456">
       <button class="login-btn" onclick="doLogin()" data-t="loginBtn">&#x767B;&#x5F55;</button>
     </div>
-    <div class="login-link" onclick="toast('&#x8BF7;&#x5148;&#u6CE8;&#u518C;&#u8D26;&#u53F7')" data-t="noAccount">&#x8FD8;&#x6CA1;&#x6709;&#x8D26;&#x53F7;&#xFF1F;&#x7ACB;&#x5373;&#u6CE8;&#u518C;</div>
+    <div class="login-link" onclick="go('register')" data-t="noAccount">&#x8FD8;&#x6CA1;&#x6709;&#x8D26;&#x53F7;&#xFF1F;&#x7ACB;&#x5373;&#u6CE8;&#u518C;</div>
+  </div>
+</div>
+
+<!-- ==================== REGISTER ==================== -->
+<div class="page" id="p-register">
+  <div class="login-page">
+    <img src="./logo.jpg" class="login-logo" alt="">
+    <div class="login-title" data-t="registerTitle">&#x6CE8;&#x518C;&#x8D26;&#x53F7;</div>
+    <div class="login-sub" data-t="registerSub">&#x521B;&#x5EFA;&#x60A8;&#x7684;&#x65B0;&#x8D26;&#x53F7;</div>
+    <div class="login-form">
+      <input type="text" class="login-input" id="regNick" placeholder="&#x6635;&#x79F0;" data-t-ph="regNick">
+      <input type="tel" class="login-input" id="regPhone" placeholder="&#x624B;&#x673A;&#x53F7; (+855 XX XXX XXXX)" data-t-ph="regPhone">
+      <input type="email" class="login-input" id="regEmail" placeholder="&#x90AE;&#x7BB1;&#x5730;&#x5740;" data-t-ph="regEmail">
+      <input type="password" class="login-input" id="regPwd" placeholder="&#x8BBE;&#x7F6E;&#x5BC6;&#x7801; (&#x81F3;&#x5C116;&#x4F4D;)" data-t-ph="regPwd">
+      <input type="password" class="login-input" id="regPwd2" placeholder="&#x786E;&#x8BA4;&#x5BC6;&#x7801;" data-t-ph="regPwd2">
+      <select class="login-input" id="regGender" style="cursor:pointer;">
+        <option value="" data-t="regGender">&#x8BF7;&#x9009;&#x62E9;&#x6027;&#x522B;</option>
+        <option value="male" data-t="regMale">&#x7537;</option>
+        <option value="female" data-t="regFemale">&#x5973;</option>
+        <option value="secret" data-t="regSecret">&#x4FDD;&#x5BC6;</option>
+      </select>
+      <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;opacity:0.6;text-align:left;margin-bottom:8px;">
+        <input type="checkbox" id="regAgree" style="margin-top:2px;accent-color:var(--gold);">
+        <span data-t="regAgree">&#x6211;&#x5DF2;&#x9605;&#x8BFB;&#x5E76;&#x540C;&#x610F;&#x300A;&#x7528;&#x6237;&#x534F;&#x8BAE;&#x300B;</span>
+      </label>
+      <button class="login-btn" onclick="doRegister()" data-t="registerBtn">&#x521B;&#x5EFA;&#x8D26;&#x53F7;</button>
+    </div>
+    <div class="login-link" onclick="go('login')" data-t="hasAccount">&#x5DF2;&#x6709;&#x8D26;&#x53F7;&#xFF1F;&#x7ACB;&#x5373;&#x767B;&#x5F55;</div>
   </div>
 </div>
 
@@ -1677,6 +1705,12 @@ const I18N = {
     aiGreeting:"您好！我是白马有机果蔬的AI智能助手。我可以帮您解答关于产品、订单、配送、退款等方面的问题。请问有什么可以帮您？",
     aiThinking:"思考中...", aiHumanHandover:"正在为您转接人工客服...",
     loginTitle:"白马有机果蔬", loginBtn:"登录", noAccount:"还没有账号？立即注册",
+    registerTitle:"注册账号", registerSub:"创建您的新账号",
+    regNick:"昵称", regPhone:"手机号", regEmail:"邮箱地址",
+    regPwd:"设置密码", regPwd2:"确认密码", regGender:"请选择性别",
+    regMale:"男", regFemale:"女", regSecret:"保密",
+    regAgree:"我已阅读并同意《用户协议》", registerBtn:"创建账号",
+    hasAccount:"已有账号？立即登录",
     hotSearch:"热门搜索", hotSpinach:"有机菠菜", hotMango:"芒果", hotRice:"茉莉香米",
     hotTomato:"有机番茄", hotDragon:"火龙果", cancel:"取消",
     allCategories:"全部分类", products:"款产品",
@@ -1799,6 +1833,12 @@ const I18N = {
     aiGreeting:"Hello! I am the White Horse Organic AI assistant. I can help you with questions about products, orders, delivery, refunds, and more. How can I help you?",
     aiThinking:"Thinking...", aiHumanHandover:"Connecting you to human support...",
     loginTitle:"White Horse Organic", loginBtn:"Login", noAccount:"No account? Register",
+    registerTitle:"Register", registerSub:"Create Your Account",
+    regNick:"Nickname", regPhone:"Phone Number", regEmail:"Email Address",
+    regPwd:"Set Password", regPwd2:"Confirm Password", regGender:"Select Gender",
+    regMale:"Male", regFemale:"Female", regSecret:"Prefer not to say",
+    regAgree:"I agree to the Terms of Service", registerBtn:"Create Account",
+    hasAccount:"Already have an account? Login",
     hotSearch:"Hot Search", hotSpinach:"Organic Spinach", hotMango:"Mango", hotRice:"Jasmine Rice",
     hotTomato:"Organic Tomato", hotDragon:"Dragon Fruit", cancel:"Cancel",
     allCategories:"All Categories", products:"products",
@@ -1922,6 +1962,18 @@ const I18N = {
     aiGreeting:"សួស្តី! ខ្ញុំជាជំនួយការ AI សួនសរីរាង្គសេះស ។ ខ្ញុំអាចជួយអ្នកក្នុងបញ្ហាផលិតផល ការបញ្ជា ការដឹក ការសងប្រាក់វិញ និងច្រើនទៀត ។",
     aiThinking:"កំពុងគិត...", aiHumanHandover:"កំពុងតភ្ជាប់ទៅកាន់សេវាកម្មអ្នកប្រើប្រាស់...",
     loginTitle:"សួនសរីរាង្គសេះស", loginBtn:"ចូល", noAccount:"មិនទាន់មាន? ចុះឈ្មោះ",
+    registerTitle:"ចុះឈ្មោះ", registerSub:"បង្កើតគណនីថ្មី",
+    regNick:"ឈ្មោះ", regPhone:"លេខទូរសព្ទ", regEmail:"អ៊ីមែល",
+    regPwd:"កំណត់លេខសម្ងាត់", regPwd2:"បញ្ជាក់លេខសម្ងាត់", regGender:"ជ្រើសរើសភេទ",
+    regMale:"ប្រុស", regFemale:"ស្រី", regSecret:"មិនបញ្ចាក់",
+    regAgree:"ខ្ញុំយល់ព្រមតាមលក្ខខណ្ឌ", registerBtn:"បង្កើតគណនី",
+    hasAccount:"មានគណនីហើយ? ចូល",
+    registerTitle:"ចុះឈ្មោះ", registerSub:"បង្កើតគណនីថ្មី",
+    regNick:"ឈ្មោះ", regPhone:"លេខទូរសព្ទ", regEmail:"អ៊ីមែល",
+    regPwd:"កំណត់លេខសម្ងាត់", regPwd2:"បញ្ជាក់លេខសម្ងាត់", regGender:"ជ្រើសរើសភេទ",
+    regMale:"ប្រុស", regFemale:"ស្រី", regSecret:"មិនបញ្ចាក់",
+    regAgree:"ខ្ញុំយល់ព្រមតាមលក្ខខណ្ឌ", registerBtn:"បង្កើតគណនី",
+    hasAccount:"មានគណនីហើយ? ចូល",
     hotSearch:"ក្តៅ", hotSpinach:"ប៉េកញី", hotMango:"ស្វាយ", hotRice:"អង្ករ",
     hotTomato:"ប៉េងប៉ោះ", hotDragon:"ផ្លែម្នាស់", cancel:"បោះបង់",
     allCategories:"ប្រភេទទាំងអស់", products:"ផលិតផល",
@@ -3073,7 +3125,50 @@ function filterCat(cat) {
   renderProducts(f);
 }
 function scrollToProducts() { document.getElementById('secTitle').scrollIntoView({behavior:'smooth'}); }
-function doLogin() { toast(t('loginBtn') + ' OK'); go('home'); }
+function doRegister() {
+  var nick = document.getElementById('regNick').value.trim();
+  var phone = document.getElementById('regPhone').value.trim();
+  var email = document.getElementById('regEmail').value.trim();
+  var pwd = document.getElementById('regPwd').value;
+  var pwd2 = document.getElementById('regPwd2').value;
+  var gender = document.getElementById('regGender').value;
+  var agree = document.getElementById('regAgree').checked;
+  if (!nick || nick.length < 2) { toast('请输入昵称'); return; }
+  if (!phone || !/^\+?[0-9\s\-]{8,15}$/.test(phone)) { toast('请输入有效的手机号'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('请输入有效的邮箱'); return; }
+  if (!pwd || pwd.length < 6) { toast('密码至少6位'); return; }
+  if (pwd !== pwd2) { toast('两次密码不一致'); return; }
+  if (!gender) { toast('请选择性别'); return; }
+  if (!agree) { toast('请同意用户协议'); return; }
+  var users = JSON.parse(localStorage.getItem('wh_users') || '[]');
+  if (users.find(function(u) { return u.email === email || u.phone === phone; })) {
+    toast('该手机号或邮箱已被注册'); return;
+  }
+  var newUser = {
+    id: 'user_' + Date.now(),
+    nickname: nick, phone: phone, email: email,
+    password: btoa(pwd), gender: gender,
+    createdAt: new Date().toISOString()
+  };
+  users.push(newUser);
+  localStorage.setItem('wh_users', JSON.stringify(users));
+  var sessionUser = { id: newUser.id, nickname: nick, phone: phone, email: email, gender: gender };
+  localStorage.setItem('wh_user', JSON.stringify(sessionUser));
+  toast('注册成功！欢迎加入');
+  go('home');
+}
+function doLogin() {
+  var phone = document.querySelector('#p-login input[type="tel"]').value.trim();
+  var pwd = document.querySelector('#p-login input[type="password"]').value;
+  if (!phone || !pwd) { toast('请输入手机号和密码'); return; }
+  var users = JSON.parse(localStorage.getItem('wh_users') || '[]');
+  var found = users.find(function(u) { return (u.phone === phone || u.email === phone) && u.password === btoa(pwd); });
+  if (!found) { toast('账号或密码错误'); return; }
+  var sessionUser = { id: found.id, nickname: found.nickname, phone: found.phone, email: found.email, gender: found.gender };
+  localStorage.setItem('wh_user', JSON.stringify(sessionUser));
+  toast('登录成功，欢迎回来！');
+  go('home');
+}
 function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
 
 // ===================== HERO CAROUSEL =====================
